@@ -1,0 +1,4459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Plataforma Académica</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Plataforma de consultoría académica para estudiantes y profesores">
+<link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0a0a2a 0%, #1a1a2e 100%);
+    color: #fff;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* PRESENTACIÓN */
+.presentacion {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), 
+                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.presentacion-box {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* SLIDER */
+.slider {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.slide-content {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.slide-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.slide-content p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0.9;
+}
+
+/* TÍTULO PRINCIPAL */
+.titulo-principal {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* SECCIÓN INFORMATIVA */
+.info-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-color: #00dbde;
+}
+
+.info-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.info-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #00dbde;
+}
+
+.info-card p {
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* SECCIÓN DE PLANES */
+.planes-section {
+    min-height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0a1a3a 0%, #1a1a2e 100%);
+    padding: 40px 20px;
+}
+
+.planes-container {
+    max-width: 1400px;
+    width: 100%;
+    text-align: center;
+}
+
+.planes-container h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.planes-container p {
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    max-width: 800px;
+    margin: 0 auto 50px;
+}
+
+.planes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.plan-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.plan-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border-color: #00dbde;
+}
+
+.plan-card.popular {
+    border: 2px solid #00dbde;
+    background: rgba(0, 219, 222, 0.05);
+    transform: scale(1.05);
+}
+
+.plan-card.popular:hover {
+    transform: scale(1.05) translateY(-15px);
+}
+
+.plan-badge {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    background: linear-gradient(135deg, #00dbde, #fc00ff);
+    color: white;
+    padding: 8px 40px;
+    transform: rotate(45deg);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.plan-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.plan-card h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.plan-price {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.plan-period {
+    font-size: 1rem;
+    color: #aaa;
+    font-weight: normal;
+}
+
+.plan-features {
+    list-style: none;
+    text-align: left;
+    margin: 30px 0;
+    padding: 0;
+}
+
+.plan-features li {
+    margin-bottom: 15px;
+    padding-left: 35px;
+    position: relative;
+    color: #e0e0e0;
+    font-size: 1.1rem;
+}
+
+.plan-features li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #00dbde;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.plan-features li.disabled:before {
+    content: "✗";
+    color: #ff416c;
+}
+
+.plan-btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.plan-btn.primary {
+    background: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 219, 222, 0.3);
+}
+
+.plan-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 219, 222, 0.4);
+}
+
+.plan-btn.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.plan-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* SECCIÓN DE PAGO */
+.pago-section {
+    min-height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0a1a3a 0%, #1a1a2e 100%);
+    padding: 40px 20px;
+}
+
+.pago-container {
+    max-width: 1000px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.pago-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.step.active {
+    background: linear-gradient(135deg, #00dbde 0%, #0093E9 100%);
+    transform: scale(1.05);
+}
+
+.step.completed {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.step.active .step-number {
+    background: white;
+    color: #00dbde;
+}
+
+.step.completed .step-number {
+    background: white;
+    color: #4CAF50;
+}
+
+.pago-content {
+    display: none;
+}
+
+.pago-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.resumen-plan {
+    background: rgba(0, 219, 222, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(0, 219, 222, 0.3);
+}
+
+.resumen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.resumen-icon {
+    font-size: 3rem;
+}
+
+.resumen-details h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #00dbde;
+}
+
+.resumen-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.metodos-pago {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.metodo-pago {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.metodo-pago:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.metodo-pago.selected {
+    border-color: #00dbde;
+    background: rgba(0, 219, 222, 0.1);
+}
+
+.metodo-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.form-pago {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #00dbde;
+    box-shadow: 0 0 0 2px rgba(0, 219, 222, 0.3);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.comprobante {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    margin: 30px 0;
+}
+
+.comprobante-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    display: block;
+    animation: pulse 2s infinite;
+}
+
+.comprobante-details {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.comprobante-details p {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comprobante-details strong {
+    color: #00dbde;
+}
+
+/* LOADER DE PAGO */
+.pago-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pago-spinner {
+    width: 80px;
+    height: 80px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid #00dbde;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.pago-loader-text {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.pago-progress {
+    width: 300px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.pago-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    width: 0%;
+    transition: width 0.3s;
+}
+
+/* BOTONES */
+.green-btn {
+    background: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+    border: none;
+    padding: 18px 45px;
+    border-radius: 50px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 10px 20px rgba(0, 219, 222, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.green-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 219, 222, 0.4);
+}
+
+.back-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px;
+}
+
+.back-btn:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 65, 108, 0.4);
+}
+
+/* LOGIN / REGISTRO */
+.login {
+    min-height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(10, 25, 47, 0.9), rgba(10, 25, 47, 0.9)), 
+                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-box h2 {
+    margin-bottom: 25px;
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.login-box input, .login-box select, .login-box textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.login-box input:focus, .login-box select:focus, .login-box textarea:focus {
+    outline: none;
+    border-color: #00dbde;
+    box-shadow: 0 0 0 2px rgba(0, 219, 222, 0.3);
+}
+
+.login-box button {
+    width: 100%;
+    background: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+    padding: 15px;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s;
+    font-weight: 600;
+    margin-top: 10px;
+    box-shadow: 0 10px 20px rgba(0, 219, 222, 0.3);
+}
+
+.login-box button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 219, 222, 0.4);
+}
+
+.login-box p {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.login-box p span {
+    color: #00dbde;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.login-box p span:hover {
+    color: #fc00ff;
+    text-decoration: underline;
+}
+
+/* DASHBOARD */
+.dashboard {
+    display: none;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    padding: 30px 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #eaeaea;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+    color: #00dbde;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ESTILOS PARA INDICACIONES */
+.form-indicaciones {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #e9ecef;
+}
+
+.input-indicaciones {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+}
+
+.input-indicaciones:focus {
+    outline: none;
+    border-color: #00dbde;
+    box-shadow: 0 0 0 2px rgba(0, 219, 222, 0.2);
+}
+
+.btn-enviar-indicaciones {
+    background: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-enviar-indicaciones:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 219, 222, 0.3);
+}
+
+.indicacion-item {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #00dbde;
+}
+
+.indicacion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.indicacion-estudiante {
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.indicacion-fecha {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.indicacion-mensaje {
+    color: #444;
+    line-height: 1.5;
+    margin: 10px 0;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.indicacion-enlace {
+    display: block;
+    color: #00dbde;
+    text-decoration: none;
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+.indicacion-enlace:hover {
+    text-decoration: underline;
+}
+
+.indicacion-estado {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.indicacion-pendiente {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.indicacion-vista {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.indicacion-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-marcar-vista {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-marcar-vista:hover {
+    background: #218838;
+}
+
+.btn-eliminar-indicacion {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-eliminar-indicacion:hover {
+    background: #c82333;
+}
+
+/* Plan del usuario en dashboard */
+.user-plan-info {
+    background: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 219, 222, 0.3);
+}
+
+.plan-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.plan-upgrade-btn {
+    background: white;
+    color: #00dbde;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.plan-upgrade-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+}
+
+/* CHECKBOX HORARIOS */
+.checkbox-horario {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.checkbox-horario:hover {
+    background: #e9ecef;
+}
+
+.checkbox-horario input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.checkbox-horario label {
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #333;
+    flex-grow: 1;
+}
+
+/* LISTA DE CURSOS DISPONIBLES */
+.curso-disponible {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.curso-disponible:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border-color: #00dbde;
+}
+
+.curso-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.curso-title {
+    flex: 1;
+    min-width: 250px;
+}
+
+.curso-title h4 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.curso-profesor {
+    color: #666;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.curso-fecha {
+    background: linear-gradient(135deg, #00dbde 0%, #0093E9 100%);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.curso-details {
+    margin: 15px 0;
+}
+
+.curso-descripcion {
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.curso-horarios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.horario-badge {
+    background: #f0f8ff;
+    color: #007bff;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #cce5ff;
+}
+
+.curso-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-inscribirse {
+    background: linear-gradient(135deg, #00dbde 0%, #fc00ff 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.btn-inscribirse:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 219, 222, 0.3);
+}
+
+/* MENSAJES DE ERROR/ÉXITO */
+.mensaje-flotante {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    z-index: 9998;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mensaje-exito {
+    background: linear-gradient(135deg, #00dbde 0%, #0093E9 100%);
+    border-left: 5px solid #0088cc;
+}
+
+.mensaje-error {
+    background: #ffe6e6 !important;
+    color: #cc0000 !important;
+    border-left: 5px solid #ff3333 !important;
+    border: 1px solid #ffcccc;
+}
+
+.mensaje-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-left: 5px solid #5a67d8;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* LOADER GENERAL */
+.loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loader-spinner {
+    width: 80px;
+    height: 80px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid #00dbde;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.loader-text {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* CLASE PARA OCULTAR ELEMENTOS */
+.oculto {
+    display: none !important;
+}
+
+/* TÍTULO DEL PANEL */
+.titulo-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #00dbde;
+}
+
+.titulo-panel h2 {
+    margin: 0;
+    color: #333;
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nombre-usuario {
+    font-size: 1.3rem;
+    color: #00dbde;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+/* ESTILOS PARA SOLICITUDES */
+.solicitud-item {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    position: relative;
+}
+
+.solicitud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.solicitud-info {
+    flex: 1;
+}
+
+.solicitud-estudiante {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.solicitud-curso {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+}
+
+.solicitud-horario {
+    color: #666;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.solicitud-fecha {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+}
+
+.solicitud-estado {
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.estado-pendiente {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.estado-aprobada {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.estado-rechazada {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.solicitud-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-aprobar {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-aprobar:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.btn-rechazar {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-rechazar:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+.btn-enviar-indicacion {
+    background: linear-gradient(135deg, #00dbde 0%, #0093E9 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-enviar-indicacion:hover {
+    background: linear-gradient(135deg, #0093E9 0%, #00dbde 100%);
+    transform: translateY(-2px);
+}
+
+/* PANEL DE INDICACIONES */
+.panel-indicaciones {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid #e9ecef;
+    display: none;
+}
+
+.panel-indicaciones.visible {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* NOTIFICACIONES MEJORADAS */
+.notificacion-item {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.notificacion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.notificacion-item.nueva {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+}
+
+.notificacion-item.leida {
+    background: #f9f9f9;
+    border-left: 4px solid #ddd;
+}
+
+.notificacion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.notificacion-titulo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notificacion-fecha {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.notificacion-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.badge-nueva {
+    background: #2196f3;
+    color: white;
+}
+
+.badge-aprobada {
+    background: #4CAF50;
+    color: white;
+}
+
+.badge-rechazada {
+    background: #f44336;
+    color: white;
+}
+
+.badge-pendiente {
+    background: #ff9800;
+    color: white;
+}
+
+.badge-indicacion {
+    background: #9c27b0;
+    color: white;
+}
+
+.notificacion-detalles {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.notificacion-detalles h4 {
+    margin: 0 0 10px 0;
+    color: #555;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-item {
+    display: flex;
+    margin-bottom: 8px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #666;
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.info-value {
+    color: #333;
+    flex: 1;
+}
+
+.notificacion-indicaciones {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff8e1;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+.indicacion-profesor {
+    font-style: italic;
+    color: #555;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #ddd;
+}
+
+.notificacion-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-marcar-leida {
+    background: #2196f3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-marcar-leida:hover {
+    background: #0b7dda;
+    transform: translateY(-2px);
+}
+
+.btn-eliminar-notificacion {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-eliminar-notificacion:hover {
+    background: #d32f2f;
+    transform: translateY(-2px);
+}
+
+/* ESTILOS PARA INDICACIONES EN NOTIFICACIONES */
+.indicacion-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    border-left: 4px solid #ffc107;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.indicacion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.indicacion-profesor-nombre {
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.indicacion-fecha-hora {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.indicacion-contenido {
+    color: #444;
+    line-height: 1.6;
+    margin: 10px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.indicacion-enlace-curso {
+    display: block;
+    color: #00dbde;
+    text-decoration: none;
+    margin: 5px 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.indicacion-enlace-curso:hover {
+    text-decoration: underline;
+}
+
+.indicacion-estado-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.indicacion-pendiente-badge {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.indicacion-vista-badge {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Estilos para la descripción detallada en solicitudes */
+.descripcion-detallada {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    border: 1px solid #e9ecef;
+}
+
+.descripcion-titulo {
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.descripcion-contenido {
+    margin: 0;
+    color: #444;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .presentacion-box {
+        padding: 20px;
+    }
+    
+    .titulo-principal {
+        font-size: 2.2rem;
+    }
+    
+    .slider {
+        height: 400px;
+    }
+    
+    .slide-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .slide-content p {
+        font-size: 1rem;
+    }
+    
+    .info-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .planes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .plan-card.popular {
+        transform: none;
+    }
+    
+    .plan-card.popular:hover {
+        transform: translateY(-15px);
+    }
+    
+    .titulo-panel {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .logout-btn {
+        align-self: stretch;
+        justify-content: center;
+    }
+    
+    .dashboard {
+        padding: 20px 15px;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+    
+    .login-box {
+        padding: 30px 20px;
+    }
+    
+    .pago-container {
+        padding: 20px;
+    }
+    
+    .pago-steps {
+        flex-direction: column;
+    }
+    
+    .step {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .curso-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .curso-fecha {
+        align-self: flex-start;
+    }
+    
+    .curso-actions {
+        flex-direction: column;
+    }
+    
+    .solicitud-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .solicitud-acciones {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .solicitud-acciones button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .indicacion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .indicacion-acciones {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .indicacion-acciones button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .notificacion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .info-label {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .presentacion-box {
+        padding: 15px;
+    }
+    
+    .titulo-principal {
+        font-size: 1.8rem;
+    }
+    
+    .slider {
+        height: 300px;
+    }
+    
+    .slide-content {
+        padding: 20px;
+    }
+    
+    .slide-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .green-btn, .logout-btn, .back-btn {
+        width: 100%;
+        margin: 5px 0;
+        justify-content: center;
+    }
+    
+    .info-section {
+        gap: 15px;
+    }
+    
+    .info-card {
+        padding: 20px;
+    }
+    
+    .planes-container h1 {
+        font-size: 2.2rem;
+    }
+    
+    .plan-price {
+        font-size: 2.8rem;
+    }
+    
+    .curso-actions {
+        flex-direction: column;
+    }
+    
+    .btn-inscribirse {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn-enviar-indicaciones {
+        width: 100%;
+    }
+    
+    .notificacion-acciones {
+        flex-direction: column;
+    }
+    
+    .notificacion-acciones button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Cargando...</div>
+</div>
+
+<!-- LOADER DE PAGO -->
+<div class="pago-loader" id="pagoLoader">
+    <div class="pago-spinner"></div>
+    <div class="pago-loader-text" id="pagoLoaderText">Procesando pago...</div>
+    <div class="pago-progress">
+        <div class="pago-progress-bar" id="pagoProgressBar"></div>
+    </div>
+</div>
+
+<!-- PRESENTACIÓN CON IMÁGENES -->
+<section class="presentacion" id="presentacion">
+<div class="presentacion-box">
+    
+    <!-- SLIDER CON IMÁGENES REALES -->
+    <div class="slider" id="slider">
+        <div class="slide active">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" 
+                 alt="Estudiantes en biblioteca" class="slide-img">
+            <div class="slide-content">
+                <h2>📚 Consultoría Académica Profesional</h2>
+                <p>Servicios especializados para estudiantes y profesionales que buscan excelencia académica</p>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" 
+                 alt="Profesor enseñando" class="slide-img">
+            <div class="slide-content">
+                <h2>👨‍🏫 Asesorías Personalizadas</h2>
+                <p>Acompañamiento individualizado para alcanzar tus metas académicas y profesionales</p>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" 
+                 alt="Trabajo en equipo académico" class="slide-img">
+            <div class="slide-content">
+                <h2>🎓 Excelencia Académica</h2>
+                <p>Transformamos desafíos académicos en oportunidades de aprendizaje y crecimiento</p>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" 
+                 alt="Investigación académica" class="slide-img">
+            <div class="slide-content">
+                <h2>🔬 Investigación de Calidad</h2>
+                <p>Metodologías rigurosas para trabajos de investigación y tesis doctorales</p>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="titulo-principal">Plataforma Académica de Excelencia</h1>
+    
+    <!-- SECCIÓN INFORMATIVA CON ICONOS -->
+    <div class="info-section">
+        <div class="info-card">
+            <span class="info-icon">📝</span>
+            <h3>Trabajos de Grado y Tesis</h3>
+            <p>Asesoría especializada en investigación, redacción y defensa de trabajos académicos de alto nivel.</p>
+        </div>
+        
+        <div class="info-card">
+            <span class="info-icon">✍️</span>
+            <h3>Ensayos y Exámenes</h3>
+            <p>Preparación y redacción de ensayos académicos, así como preparación para exámenes complejos.</p>
+        </div>
+        
+        <div class="info-card">
+            <span class="info-icon">📖</span>
+            <h3>Normas APA - ICONTEC</h3>
+            <p>Aplicación correcta de normas de citación y referenciación en trabajos académicos.</p>
+        </div>
+        
+        <div class="info-card">
+            <span class="info-icon">🔍</span>
+            <h3>TURNITIN</h3>
+            <p>Verificación de originalidad y reducción de similitud en trabajos académicos.</p>
+        </div>
+    </div>
+    
+    <button class="green-btn" onclick="irARegistro()" aria-label="Registrarse en la plataforma">
+        <span>🚀</span> Registrarse Ahora
+    </button>
+</div>
+</section>
+
+<!-- SECCIÓN DE PLANES DE SUSCRIPCIÓN -->
+<section class="planes-section" id="planes">
+    <div class="planes-container">
+        <h1>🎯 Elige tu Plan Perfecto</h1>
+        <p>Selecciona el plan que mejor se adapte a tus necesidades académicas y desbloquea todo el potencial de nuestra plataforma</p>
+        
+        <div class="planes-grid">
+            <!-- Plan Básico -->
+            <div class="plan-card">
+                <div class="plan-icon">🎓</div>
+                <h3>Plan Básico</h3>
+                <div class="plan-price">$9.99<span class="plan-period">/mes</span></div>
+                <p>Perfecto para estudiantes que necesitan apoyo ocasional</p>
+                
+                <ul class="plan-features">
+                    <li>✅ 2 asesorías mensuales</li>
+                    <li>✅ Revisión de trabajos (hasta 5 páginas)</li>
+                    <li>✅ Acceso a cursos básicos</li>
+                    <li>✅ Soporte por email (48h respuesta)</li>
+                    <li>✅ 1 corrección de estilo mensual</li>
+                    <li>❌ Sin prioridad en solicitudes</li>
+                    <li>❌ Sin mentoría personalizada</li>
+                    <li class="disabled">Sin acceso a workshops exclusivos</li>
+                </ul>
+                
+                <button class="plan-btn secondary" onclick="seleccionarPlan('basico')">
+                    <span>🎯</span> Seleccionar Plan Básico
+                </button>
+            </div>
+            
+            <!-- Plan Avanzado (Popular) -->
+            <div class="plan-card popular">
+                <div class="plan-badge">MÁS POPULAR</div>
+                <div class="plan-icon">🚀</div>
+                <h3>Plan Avanzado</h3>
+                <div class="plan-price">$24.99<span class="plan-period">/mes</span></div>
+                <p>Ideal para estudiantes universitarios y posgrado</p>
+                
+                <ul class="plan-features">
+                    <li>✅ 5 asesorías mensuales</li>
+                    <li>✅ Revisión de trabajos (hasta 15 páginas)</li>
+                    <li>✅ Acceso completo a todos los cursos</li>
+                    <li>✅ Soporte prioritario (24h respuesta)</li>
+                    <li>✅ 3 correcciones de estilo mensuales</li>
+                    <li>✅ Prioridad en solicitudes de cursos</li>
+                    <li>✅ Mentoría mensual personalizada</li>
+                    <li>✅ Acceso a workshops semanales</li>
+                </ul>
+                
+                <button class="plan-btn primary" onclick="seleccionarPlan('avanzado')">
+                    <span>🔥</span> Seleccionar Plan Avanzado
+                </button>
+            </div>
+            
+            <!-- Plan Premium -->
+            <div class="plan-card">
+                <div class="plan-icon">🏆</div>
+                <h3>Plan Premium</h3>
+                <div class="plan-price">$49.99<span class="plan-period">/mes</span></div>
+                <p>Para profesionales e investigadores exigentes</p>
+                
+                <ul class="plan-features">
+                    <li>✅ Asesorías ilimitadas</li>
+                    <li>✅ Revisión de trabajos (hasta 50 páginas)</li>
+                    <li>✅ Acceso premium a todos los cursos</li>
+                    <li>✅ Soporte VIP (12h respuesta)</li>
+                    <li>✅ Correcciones de estilo ilimitadas</li>
+                    <li>✅ Máxima prioridad en todas las solicitudes</li>
+                    <li>✅ Mentoría semanal personalizada</li>
+                    <li>✅ Acceso exclusivo a workshops y seminarios</li>
+                    <li>✅ Revisión de TURNITIN incluida</li>
+                    <li>✅ Asesoría metodológica personalizada</li>
+                </ul>
+                
+                <button class="plan-btn primary" onclick="seleccionarPlan('premium')">
+                    <span>💎</span> Seleccionar Plan Premium
+                </button>
+            </div>
+        </div>
+        
+        <button class="green-btn" id="btnVolverLogin" onclick="volverDesdePlanes()" style="margin-top: 20px">
+            <span>🔙</span> Volver
+        </button>
+    </div>
+</section>
+
+<!-- SECCIÓN DE PAGO -->
+<section class="pago-section" id="pago">
+    <div class="pago-container">
+        <!-- PASOS DEL PROCESO -->
+        <div class="pago-steps">
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <span>Resumen del Plan</span>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <span>Método de Pago</span>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <span>Confirmación</span>
+            </div>
+        </div>
+
+        <!-- PASO 1: RESUMEN DEL PLAN -->
+        <div class="pago-content active" id="pagoStep1">
+            <h2 style="text-align: center; margin-bottom: 30px; color: white;">
+                🎯 Resumen de tu Plan
+            </h2>
+            
+            <div class="resumen-plan" id="resumenPlan">
+                <div class="resumen-header">
+                    <div class="resumen-icon" id="planIconResumen">🎓</div>
+                    <div class="resumen-details">
+                        <h3 id="planNombreResumen">Plan Básico</h3>
+                        <div class="resumen-price" id="planPrecioResumen">$9.99<span style="font-size: 1rem; color: #aaa;">/mes</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="green-btn" onclick="siguientePaso(2)">
+                    <span>💳</span> Continuar al Pago
+                </button>
+                <button class="back-btn" onclick="mostrarPlanes()" style="margin-top: 15px;">
+                    <span>❌</span> Volver a Planes
+                </button>
+            </div>
+        </div>
+
+        <!-- PASO 2: MÉTODO DE PAGO -->
+        <div class="pago-content" id="pagoStep2">
+            <h2 style="text-align: center; margin-bottom: 30px; color: white;">
+                💳 Selecciona tu Método de Pago
+            </h2>
+            
+            <div class="metodos-pago">
+                <div class="metodo-pago" onclick="seleccionarMetodo('tarjeta')" id="metodoTarjeta">
+                    <span class="metodo-icon">💳</span>
+                    <h4>Tarjeta de Crédito/Débito</h4>
+                </div>
+                
+                <div class="metodo-pago" onclick="seleccionarMetodo('paypal')" id="metodoPayPal">
+                    <span class="metodo-icon">🔵</span>
+                    <h4>PayPal</h4>
+                </div>
+            </div>
+            
+            <!-- FORMULARIO DE TARJETA -->
+            <div class="form-pago" id="formTarjeta" style="display: none;">
+                <h3 style="color: white; margin-bottom: 25px;">Información de la Tarjeta</h3>
+                
+                <div class="form-group">
+                    <label>Número de Tarjeta</label>
+                    <input type="text" id="numeroTarjeta" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre en la Tarjeta</label>
+                        <input type="text" id="nombreTarjeta" placeholder="JUAN PEREZ">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Expiración (MM/AA)</label>
+                        <input type="text" id="expiracionTarjeta" placeholder="MM/AA" maxlength="5">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Código de Seguridad (CVV)</label>
+                        <input type="password" id="cvvTarjeta" placeholder="123" maxlength="4">
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: center;">
+                    <button class="green-btn" onclick="siguientePaso(3)">
+                        <span>🔒</span> Pagar Ahora
+                    </button>
+                </div>
+            </div>
+
+            <!-- FORMULARIO DE PAYPAL -->
+            <div class="form-pago" id="formPayPal" style="display: none;">
+                <h3 style="color: white; margin-bottom: 25px;">Pago con PayPal</h3>
+                <div style="text-align: center; padding: 40px;">
+                    <p>Serás redirigido a PayPal para completar tu pago</p>
+                    <button class="green-btn" onclick="siguientePaso(3)">
+                        <span>🔵</span> Ir a PayPal
+                    </button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="back-btn" onclick="anteriorPaso()">
+                    <span>🔙</span> Regresar
+                </button>
+            </div>
+        </div>
+
+        <!-- PASO 3: CONFIRMACIÓN -->
+        <div class="pago-content" id="pagoStep3">
+            <div class="comprobante">
+                <span class="comprobante-icon">🎉</span>
+                <h2 style="color: white; margin-bottom: 20px;">¡Pago Completado Exitosamente!</h2>
+                
+                <div class="comprobante-details">
+                    <p>
+                        <strong>Número de Transacción:</strong>
+                        <span id="numeroTransaccion">TXN-123456789</span>
+                    </p>
+                    <p>
+                        <strong>Plan Adquirido:</strong>
+                        <span id="comprobantePlan">Plan Básico</span>
+                    </p>
+                    <p>
+                        <strong>Monto Pagado:</strong>
+                        <span id="comprobanteMonto">$9.99 USD</span>
+                    </p>
+                </div>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                    <button class="green-btn" onclick="irAlDashboard()">
+                        <span>🚀</span> Ir a Mi Panel
+                    </button>
+                    <button class="back-btn" onclick="descargarComprobante()">
+                        <span>📥</span> Descargar Comprobante
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REGISTRO -->
+<section class="login" id="registro">
+<div class="login-box">
+    <h2>🎯 Adquiere tu Asesoría Aquí</h2>
+    <select id="rolRegistro">
+        <option value="estudiante">🎓 Estudiante</option>
+        <option value="profesor">👨‍🏫 Profesor</option>
+    </select>
+    <input type="text" id="usuarioRegistro" placeholder="👤 Nombre de usuario">
+    <input type="password" id="passwordRegistro" placeholder="🔒 Contraseña">
+    <button onclick="registrar()">📝 Registrarse</button>
+    <p>¿Ya tienes cuenta? <span onclick="mostrarLogin()">Iniciar sesión</span></p>
+    <p style="margin-top: 10px;" id="enlacePlanesRegistro">
+        <span onclick="mostrarPlanes()" style="color: #00dbde; cursor: pointer; font-weight: 600;">
+            📋 Ver Planes de Suscripción
+        </span>
+    </p>
+</div>
+</section>
+
+<!-- LOGIN -->
+<section class="login" id="login">
+<div class="login-box">
+    <h2>🔑 Iniciar Sesión</h2>
+    <select id="rolLogin">
+        <option value="estudiante">🎓 Estudiante</option>
+        <option value="profesor">👨‍🏫 Profesor</option>
+    </select>
+    <input type="text" id="loginUsuario" placeholder="👤 Usuario" autocomplete="username">
+    <input type="password" id="loginPassword" placeholder="🔒 Contraseña" autocomplete="current-password">
+    <button onclick="login()">🚀 Entrar</button>
+    <p>¿No tienes cuenta? <span onclick="irARegistro()">Regístrate aquí</span></p>
+    <p style="margin-top: 10px;" id="enlacePlanesLogin">
+        <span onclick="mostrarPlanes()" style="color: #00dbde; cursor: pointer; font-weight: 600;">
+            📋 Ver Planes de Suscripción
+        </span>
+    </p>
+</div>
+</section>
+
+<!-- ESTUDIANTE SIMPLIFICADO -->
+<section class="dashboard" id="estudiante">
+<div class="titulo-panel">
+    <div>
+        <h2><span>🎓</span> Panel Estudiante <span id="nombreEstudiante" class="nombre-usuario"></span></h2>
+    </div>
+    <button class="logout-btn" onclick="cerrarSesion()">
+        <span>🚪</span> Cerrar sesión
+    </button>
+</div>
+
+<!-- Información del Plan del Usuario -->
+<div class="user-plan-info" id="userPlanInfo">
+    <div class="plan-indicator">
+        <span id="planIcon">📋</span>
+        <span id="planName">Plan: Cargando...</span>
+    </div>
+    <button class="plan-upgrade-btn" onclick="mostrarPlanes()">
+        🚀 Actualizar Plan
+    </button>
+</div>
+
+<div class="card">
+    <h3><span>📝</span> Solicitar Curso Manual</h3>
+    <input id="cursoEstudiante" placeholder="📚 Nombre del curso">
+    <textarea id="descripcionCurso" placeholder="📋 Descripción detallada del curso" 
+              style="width:100%;margin-top:10px;min-height:120px"></textarea>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+        <div>
+            <label for="fechaCurso">📅 Selecciona un día:</label>
+            <input type="date" id="fechaCurso" style="width:100%;margin-top:5px" 
+                   onchange="mostrarHorarios()">
+        </div>
+        <div>
+            <label for="horarioCurso">🕐 Selecciona un horario:</label>
+            <select id="horarioCurso" style="width:100%;margin-top:5px">
+                <option value="">Selecciona un horario</option>
+            </select>
+        </div>
+    </div>
+    
+    <button class="green-btn" onclick="enviarSolicitud()">
+        <span>📤</span> Enviar Solicitud
+    </button>
+</div>
+
+<button class="green-btn" onclick="toggleCursos()" id="btnCursos">
+    <span>🔍</span> Ver Cursos Disponibles
+</button>
+<div id="listaCursos"></div>
+
+<div class="card">
+    <h3><span>📢</span> Notificaciones y Seguimiento de Cursos</h3>
+    <div class="notificacion-acciones" style="margin-bottom: 20px;">
+        <button class="btn-marcar-leida" onclick="marcarTodasComoLeidas()">
+            <span>✅</span> Marcar Todas como Leídas
+        </button>
+        <button class="btn-eliminar-notificacion" onclick="eliminarNotificaciones()">
+            <span>🗑️</span> Eliminar Todas
+        </button>
+    </div>
+    <div id="notificaciones"></div>
+</div>
+</section>
+
+<!-- PROFESOR SIMPLIFICADO -->
+<section class="dashboard" id="profesor">
+<div class="titulo-panel">
+    <div>
+        <h2><span>👨‍🏫</span> Panel Profesor <span id="nombreProfesor" class="nombre-usuario"></span></h2>
+    </div>
+    <button class="logout-btn" onclick="cerrarSesion()">
+        <span>🚪</span> Cerrar sesión
+    </button>
+</div>
+
+<div class="card">
+    <h3><span>📢</span> Publicar Nuevo Curso</h3>
+    <input id="nombreCurso" placeholder="📚 Nombre del curso">
+    <textarea id="descripcionTemasCurso" placeholder="📋 Descripción de los temas a impartir" 
+              style="width:100%;margin-top:10px;min-height:120px"></textarea>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+        <div>
+            <label>📅 Día del curso:</label>
+            <input type="date" id="fechaCursoProfesor" style="width:100%;margin-top:5px">
+        </div>
+        <div>
+            <label>🕐 Horarios disponibles:</label>
+            <div id="checkboxHorarios" style="margin-top:5px;"></div>
+        </div>
+    </div>
+    
+    <button class="green-btn" onclick="publicarCurso()">
+        <span>🚀</span> Publicar Curso
+    </button>
+</div>
+
+<div class="card">
+    <h3><span>📚</span> Cursos Publicados</h3>
+    <div id="horariosProfesor"></div>
+</div>
+
+<!-- SOLICITUDES DE ESTUDIANTES CON INDICACIONES INTEGRADAS -->
+<div class="card">
+    <h3><span>📨</span> Solicitudes de Estudiantes</h3>
+    <div id="solicitudes"></div>
+</div>
+</section>
+
+<script>
+// ========== VARIABLES GLOBALES ==========
+let usuarioActual = '';
+let slideIndex = 0;
+let slides = [];
+let visible = false;
+let cursosRechazadosEnSesion = [];
+let notificacionesMostradas = [];
+let usuarioRecienRegistrado = null;
+let planSeleccionado = null;
+let metodoPagoSeleccionado = null;
+let pasosPago = 1;
+let cursosMostrados = false;
+
+// DATOS
+let cursos = [];
+let solicitudes = JSON.parse(localStorage.getItem('solicitudes')) || [];
+let notis = JSON.parse(localStorage.getItem('notis')) || [];
+let users = JSON.parse(localStorage.getItem('users')) || [];
+let indicaciones = JSON.parse(localStorage.getItem('indicaciones')) || [];
+
+// ========== FUNCIONES UTILITARIAS ==========
+function hashPassword(password) {
+    return btoa(unescape(encodeURIComponent(password)));
+}
+
+function verifyPassword(inputPassword, storedHash) {
+    try {
+        const inputHash = btoa(unescape(encodeURIComponent(inputPassword)));
+        return inputHash === storedHash;
+    } catch (error) {
+        console.error('Error verificando contraseña:', error);
+        return false;
+    }
+}
+
+function inicializarSlider() {
+    slides = document.querySelectorAll('.slide');
+    if (slides.length > 0) {
+        slides[0].classList.add('active');
+        setInterval(cambiarSlide, 5000);
+    }
+}
+
+function cambiarSlide() {
+    if (slides.length === 0) return;
+    
+    slides[slideIndex].classList.remove('active');
+    slideIndex = (slideIndex + 1) % slides.length;
+    slides[slideIndex].classList.add('active');
+}
+
+function mostrarMensaje(texto, tipo = 'info', icono = '') {
+    const mensajesAnteriores = document.querySelectorAll('.mensaje-flotante');
+    mensajesAnteriores.forEach(msg => msg.remove());
+    
+    const mensaje = document.createElement('div');
+    mensaje.className = `mensaje-flotante mensaje-${tipo}`;
+    mensaje.innerHTML = icono ? `<span style="font-size: 1.5rem">${icono}</span> ${texto}` : texto;
+    
+    document.body.appendChild(mensaje);
+    
+    setTimeout(() => {
+        if (mensaje.parentNode) {
+            mensaje.parentNode.removeChild(mensaje);
+        }
+    }, 3000);
+}
+
+function mostrarLoader(mostrar) {
+    const loader = document.getElementById('loader');
+    if (loader) {
+        loader.style.display = mostrar ? 'flex' : 'none';
+    }
+}
+
+function mostrarPagoLoader(mostrar) {
+    const loader = document.getElementById('pagoLoader');
+    if (loader) {
+        loader.style.display = mostrar ? 'flex' : 'none';
+        if (!mostrar) {
+            document.getElementById('pagoProgressBar').style.width = '0%';
+            document.getElementById('pagoLoaderText').textContent = 'Procesando pago...';
+        }
+    }
+}
+
+// ========== FUNCIONES DE NAVEGACIÓN ==========
+function ocultarTodo() {
+    document.querySelectorAll('section').forEach(sec => {
+        sec.style.display = 'none';
+    });
+}
+
+function irARegistro() {
+    ocultarTodo();
+    document.getElementById('registro').style.display = 'flex';
+    mostrarMensaje('Completa el formulario para registrarte', 'info', '📝');
+}
+
+function mostrarLogin() {
+    ocultarTodo();
+    document.getElementById('login').style.display = 'flex';
+    limpiarCamposLogin();
+    mostrarMensaje('Ingresa tus credenciales para acceder', 'info', '🔑');
+}
+
+function limpiarCamposLogin() {
+    document.getElementById('loginUsuario').value = '';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('rolLogin').selectedIndex = 0;
+}
+
+function mostrarPlanes() {
+    ocultarTodo();
+    document.getElementById('planes').style.display = 'flex';
+    mostrarMensaje('Elige el plan que mejor se adapte a tus necesidades', 'info', '🎯');
+}
+
+function mostrarPago() {
+    if (!planSeleccionado) {
+        mostrarMensaje('Por favor selecciona un plan primero', 'error', '❌');
+        return;
+    }
+    
+    ocultarTodo();
+    document.getElementById('pago').style.display = 'flex';
+    
+    pasosPago = 1;
+    actualizarPasos();
+    
+    cargarResumenPlan(planSeleccionado);
+}
+
+function volverDesdePlanes() {
+    if (usuarioActual) {
+        const user = users.find(x => x.u === usuarioActual);
+        if (user) {
+            ocultarTodo();
+            document.getElementById(user.r).style.display = 'block';
+            if (user.r === 'profesor') {
+                cargarHorariosProfesor();
+                cargarCheckboxHorarios();
+                cargarSolicitudesProfesor();
+            } else if (user.r === 'estudiante') {
+                actualizarInfoPlanEstudiante();
+                cargarNotificaciones();
+            }
+        }
+    } else {
+        mostrarLogin();
+    }
+}
+
+function cerrarSesion() {
+    if (confirm('¿Estás seguro de cerrar sesión?')) {
+        mostrarLoader(true);
+        
+        setTimeout(() => {
+            usuarioActual = '';
+            usuarioRecienRegistrado = null;
+            cursosRechazadosEnSesion = [];
+            notificacionesMostradas = [];
+            planSeleccionado = null;
+            metodoPagoSeleccionado = null;
+            cursosMostrados = false;
+            
+            // Eliminar sección de indicaciones si existe
+            const indicacionesSection = document.getElementById('indicacionesEstudiante');
+            if (indicacionesSection) {
+                indicacionesSection.remove();
+            }
+            
+            ocultarTodo();
+            document.getElementById('presentacion').style.display = 'flex';
+            
+            visible = false;
+            
+            mostrarLoader(false);
+            mostrarMensaje('Sesión cerrada exitosamente', 'exito', '👋');
+        }, 1000);
+    }
+}
+
+// ========== FUNCIONES DE REGISTRO Y LOGIN ==========
+function registrar() {
+    try {
+        mostrarLoader(true);
+        
+        let u = document.getElementById('usuarioRegistro').value.trim();
+        let p = document.getElementById('passwordRegistro').value;
+        let r = document.getElementById('rolRegistro').value;
+        
+        if (!u || !p) {
+            mostrarMensaje('Completa todos los campos', 'error', '❌');
+            mostrarLoader(false);
+            return;
+        }
+        
+        if (users.find(x => x.u === u)) {
+            mostrarMensaje('El usuario ya existe', 'error', '❌');
+            mostrarLoader(false);
+            return;
+        }
+        
+        // Guardar con hash
+        const hashedPassword = hashPassword(p);
+        users.push({u, p: hashedPassword, r, plan: null});
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        usuarioRecienRegistrado = u;
+        
+        mostrarMensaje('¡Registro exitoso!', 'exito', '🎉');
+        
+        document.getElementById('usuarioRegistro').value = '';
+        document.getElementById('passwordRegistro').value = '';
+        document.getElementById('rolRegistro').selectedIndex = 0;
+        
+        // CORRECCIÓN: Mostrar planes para estudiantes, login para profesores
+        if (r === 'estudiante') {
+            mostrarPlanes();
+        } else if (r === 'profesor') {
+            mostrarLogin();
+        }
+        
+    } catch (error) {
+        console.error('Error en registro:', error);
+        mostrarMensaje('Ocurrió un error durante el registro', 'error', '❌');
+    } finally {
+        mostrarLoader(false);
+    }
+}
+
+function login() {
+    try {
+        mostrarLoader(true);
+        
+        let u = document.getElementById('loginUsuario').value.trim();
+        let p = document.getElementById('loginPassword').value;
+        let r = document.getElementById('rolLogin').value;
+        
+        // Buscar usuario
+        let user = users.find(x => x.u === u && x.r === r);
+        
+        if (!user) {
+            mostrarMensaje('Usuario o contraseña incorrectos', 'error', '❌');
+            mostrarLoader(false);
+            return;
+        }
+        
+        // Verificar contraseña
+        if (!verifyPassword(p, user.p)) {
+            mostrarMensaje('Usuario o contraseña incorrectos', 'error', '❌');
+            mostrarLoader(false);
+            return;
+        }
+        
+        usuarioActual = u;
+        // Resetear cursos rechazados al iniciar nueva sesión
+        cursosRechazadosEnSesion = [];
+        cursosMostrados = false;
+        
+        ocultarTodo();
+        
+        if (r === 'estudiante') {
+            const estudiante = users.find(x => x.u === u);
+            
+            if (!estudiante.plan) {
+                mostrarPlanes();
+            } else {
+                document.getElementById('estudiante').style.display = 'block';
+                mostrarMensaje(`¡Bienvenido de nuevo ${u}!`, 'exito', '🎓');
+                actualizarInfoPlanEstudiante();
+                cargarNotificaciones();
+            }
+        } else if (r === 'profesor') {
+            document.getElementById('profesor').style.display = 'block';
+            mostrarMensaje(`¡Bienvenido Profesor ${u}!`, 'exito', '👨‍🏫');
+            cargarHorariosProfesor();
+            cargarCheckboxHorarios();
+            cargarSolicitudesProfesor();
+        }
+        
+        limpiarCamposLogin();
+        
+    } catch (error) {
+        console.error('Error en login:', error);
+        mostrarMensaje('Ocurrió un error durante el inicio de sesión', 'error', '❌');
+    } finally {
+        mostrarLoader(false);
+    }
+}
+
+// ========== FUNCIÓN PARA ACTUALIZAR INFO DEL PLAN DEL ESTUDIANTE ==========
+function actualizarInfoPlanEstudiante() {
+    if (!usuarioActual) return;
+    
+    const estudiante = users.find(x => x.u === usuarioActual);
+    if (!estudiante) return;
+    
+    const planElement = document.getElementById('planName');
+    const planIconElement = document.getElementById('planIcon');
+    const nombreEstudiante = document.getElementById('nombreEstudiante');
+    
+    if (estudiante.plan) {
+        const nombresPlanes = {
+            'basico': { nombre: 'Plan Básico', icono: '🎓' },
+            'avanzado': { nombre: 'Plan Avanzado', icono: '🚀' },
+            'premium': { nombre: 'Plan Premium', icono: '🏆' }
+        };
+        
+        const planInfo = nombresPlanes[estudiante.plan] || { nombre: 'Plan Desconocido', icono: '📋' };
+        
+        planElement.textContent = `Plan: ${planInfo.nombre}`;
+        planIconElement.textContent = planInfo.icono;
+    } else {
+        planElement.textContent = 'Sin Plan Activo';
+        planIconElement.textContent = '❌';
+    }
+    
+    if (nombreEstudiante) {
+        nombreEstudiante.textContent = usuarioActual;
+    }
+}
+
+// ========== FUNCIONES DE NOTIFICACIONES MEJORADAS ==========
+function cargarNotificaciones() {
+    const notificacionesDiv = document.getElementById('notificaciones');
+    if (!notificacionesDiv) return;
+    
+    // Cargar datos necesarios
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    indicaciones = JSON.parse(localStorage.getItem('indicaciones')) || [];
+    
+    // Filtrar notificaciones del usuario
+    const notisUsuario = notis.filter(n => n.usuario === usuarioActual);
+    
+    if (notisUsuario.length === 0) {
+        notificacionesDiv.innerHTML = `
+            <div class="notificacion-item" style="text-align: center; padding: 40px;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 15px;">📭</span>
+                <h4 style="margin: 0 0 10px 0; color: #333;">No tienes notificaciones</h4>
+                <p style="color: #666; margin: 0;">Aquí aparecerán las notificaciones sobre tus cursos y solicitudes.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Ordenar por fecha (más recientes primero)
+    notisUsuario.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    
+    let html = '';
+    
+    notisUsuario.forEach(notificacion => {
+        const fecha = new Date(notificacion.fecha).toLocaleDateString('es-ES');
+        const hora = new Date(notificacion.fecha).toLocaleTimeString('es-ES', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+        
+        let claseNotificacion = notificacion.leida ? 'leida' : 'nueva';
+        let badgeClass = '';
+        let badgeText = '';
+        let icono = '📨';
+        
+        // Determinar tipo de notificación
+        if (notificacion.tipo.includes('aprobada') || notificacion.tipo === 'aprobacion') {
+            badgeClass = 'badge-aprobada';
+            badgeText = 'APROBADA';
+            icono = '✅';
+        } else if (notificacion.tipo.includes('rechazada') || notificacion.tipo === 'rechazo') {
+            badgeClass = 'badge-rechazada';
+            badgeText = 'RECHAZADA';
+            icono = '❌';
+        } else if (notificacion.tipo.includes('pendiente')) {
+            badgeClass = 'badge-pendiente';
+            badgeText = 'PENDIENTE';
+            icono = '⏳';
+        } else if (notificacion.tipo === 'indicacion') {
+            badgeClass = 'badge-indicacion';
+            badgeText = 'INDICACIONES';
+            icono = '📨';
+        } else {
+            badgeClass = 'badge-nueva';
+            badgeText = notificacion.leida ? 'LEÍDA' : 'NUEVA';
+        }
+        
+        // Buscar información del curso relacionado
+        let infoCurso = null;
+        let indicacionesCurso = [];
+        
+        if (notificacion.cursoId) {
+            infoCurso = cursos.find(c => c.id === notificacion.cursoId);
+        }
+        
+        // Buscar solicitud relacionada
+        const solicitudRelacionada = solicitudes.find(s => 
+            s.estudiante === usuarioActual && 
+            (s.cursoId === notificacion.cursoId || s.id === notificacion.solicitudId)
+        );
+        
+        // Buscar indicaciones para esta notificación
+        if (notificacion.indicacionId) {
+            // Notificación específica de una indicación
+            const indicacionRelacionada = indicaciones.find(ind => 
+                ind.id === notificacion.indicacionId
+            );
+            if (indicacionRelacionada) {
+                indicacionesCurso = [indicacionRelacionada];
+            }
+        } else if (notificacion.solicitudId) {
+            // Buscar indicaciones para esta solicitud
+            indicacionesCurso = indicaciones.filter(ind => 
+                ind.estudiante === usuarioActual && 
+                ind.solicitudId === notificacion.solicitudId
+            );
+        } else if (solicitudRelacionada) {
+            // Buscar indicaciones para esta solicitud (fallback)
+            indicacionesCurso = indicaciones.filter(ind => 
+                ind.estudiante === usuarioActual && 
+                ind.solicitudId === solicitudRelacionada.id
+            );
+        } else if (infoCurso) {
+            // Buscar indicaciones por curso
+            indicacionesCurso = indicaciones.filter(ind => 
+                ind.estudiante === usuarioActual && 
+                ind.cursoId === infoCurso.id
+            );
+        }
+        
+        html += `
+            <div class="notificacion-item ${claseNotificacion}" data-id="${notificacion.id}">
+                <div class="notificacion-header">
+                    <div class="notificacion-titulo">
+                        ${icono} ${notificacion.mensaje}
+                        <span class="notificacion-badge ${badgeClass}">${badgeText}</span>
+                    </div>
+                    <div class="notificacion-fecha">
+                        📅 ${fecha} - ${hora}
+                    </div>
+                </div>
+                
+                <div class="notificacion-detalles">
+                    <h4><span>📋</span> Información del Curso</h4>
+        `;
+        
+        // INFORMACIÓN DEL CURSO
+        if (infoCurso) {
+            html += `
+                    <div class="info-item">
+                        <div class="info-label"><span>📚</span> Curso:</div>
+                        <div class="info-value">${infoCurso.nombre}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label"><span>👨‍🏫</span> Profesor:</div>
+                        <div class="info-value">${infoCurso.profesor}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label"><span>📝</span> Descripción:</div>
+                        <div class="info-value">${infoCurso.descripcion || 'Sin descripción'}</div>
+                    </div>
+                    
+                    ${infoCurso.horarios && infoCurso.horarios.length > 0 ? `
+                    <div class="info-item">
+                        <div class="info-label"><span>🕐</span> Horarios:</div>
+                        <div class="info-value">${infoCurso.horarios.join(', ')}</div>
+                    </div>
+                    ` : ''}
+            `;
+        }
+        
+        // INDICACIONES DEL PROFESOR
+        if (indicacionesCurso.length > 0) {
+            html += `
+                    <div class="info-item">
+                        <div class="info-label"><span>📨</span> Indicaciones del Profesor:</div>
+                        <div class="info-value">
+                            <div style="margin-top: 10px; width: 100%;">
+                                <div class="notificacion-indicaciones">
+            `;
+            
+            indicacionesCurso.forEach(indicacion => {
+                const fechaInd = new Date(indicacion.fecha).toLocaleDateString('es-ES');
+                const horaInd = new Date(indicacion.fecha).toLocaleTimeString('es-ES', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                
+                html += `
+                    <div class="indicacion-card">
+                        <div class="indicacion-header">
+                            <div class="indicacion-profesor-nombre">
+                                <span>👨‍🏫</span> ${indicacion.profesorNombre || indicacion.profesor}
+                            </div>
+                            <div class="indicacion-fecha-hora">
+                                📅 ${fechaInd} - ${horaInd}
+                            </div>
+                        </div>
+                        
+                        <div class="indicacion-contenido">
+                            ${indicacion.mensaje.replace(/\n/g, '<br>')}
+                        </div>
+                        
+                        ${indicacion.enlaceCurso ? `
+                        <a href="${indicacion.enlaceCurso}" target="_blank" class="indicacion-enlace-curso">
+                            🔗 Enlace del curso: ${indicacion.enlaceCurso}
+                        </a>
+                        ` : ''}
+                        
+                        <div style="margin-top: 10px;">
+                            <span class="indicacion-estado-badge ${indicacion.vista ? 'indicacion-vista-badge' : 'indicacion-pendiente-badge'}">
+                                ${indicacion.vista ? '✅ Vista' : '⏳ Pendiente de revisión'}
+                            </span>
+                            
+                            ${!indicacion.vista ? `
+                            <button onclick="marcarIndicacionComoVista('${indicacion.id}', '${notificacion.id}')"
+                                    style="margin-left: 10px; background: #28a745; color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;">
+                                ✅ Marcar como vista
+                            </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            `;
+        }
+        
+        // INFORMACIÓN DE LA SOLICITUD - MOSTRAR DIRECTAMENTE LA DESCRIPCIÓN DETALLADA
+        if (solicitudRelacionada) {
+            // Mostrar fecha solicitada
+            if (solicitudRelacionada.fechaSolicitada) {
+                html += `
+                    <div class="info-item">
+                        <div class="info-label"><span>📅</span> Fecha solicitada:</div>
+                        <div class="info-value">${solicitudRelacionada.fechaSolicitada}</div>
+                    </div>
+                `;
+            }
+            
+            // Mostrar horario solicitado
+            if (solicitudRelacionada.horarioSolicitado) {
+                html += `
+                    <div class="info-item">
+                        <div class="info-label"><span>🕐</span> Horario solicitado:</div>
+                        <div class="info-value">${solicitudRelacionada.horarioSolicitado}</div>
+                    </div>
+                `;
+            }
+            
+            // Mostrar estado
+            html += `
+                    <div class="info-item">
+                        <div class="info-label"><span>📋</span> Estado:</div>
+                        <div class="info-value">
+                            <span class="notificacion-badge estado-${solicitudRelacionada.estado}">
+                                ${solicitudRelacionada.estado.toUpperCase()}
+                            </span>
+                        </div>
+                    </div>
+            `;
+            
+            // MOSTRAR DIRECTAMENTE LA DESCRIPCIÓN DETALLADA (en lugar del botón "Ver detalles")
+            if (solicitudRelacionada.descripcion && solicitudRelacionada.descripcion.trim() !== '') {
+                html += `
+                    <div class="info-item" style="flex-direction: column; align-items: flex-start;">
+                        <div class="info-label" style="margin-bottom: 10px;">
+                            <span>📝</span> Descripción detallada:
+                        </div>
+                        <div class="info-value" style="width: 100%;">
+                            <div class="descripcion-detallada" style="margin: 10px 0;">
+                                <p class="descripcion-contenido">
+                                    ${solicitudRelacionada.descripcion.replace(/\n/g, '<br>')}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Si es una solicitud manual, mostrar el nombre del curso
+            if (solicitudRelacionada.tipo === 'manual' && solicitudRelacionada.cursoNombre) {
+                html += `
+                    <div class="info-item">
+                        <div class="info-label"><span>📚</span> Curso solicitado:</div>
+                        <div class="info-value">${solicitudRelacionada.cursoNombre}</div>
+                    </div>
+                `;
+            }
+        }
+        
+        html += `
+                </div>
+                
+                <div class="notificacion-acciones">
+                    ${!notificacion.leida ? `
+                    <button class="btn-marcar-leida" onclick="marcarNotificacionComoLeida('${notificacion.id}')">
+                        <span>✅</span> Marcar como Leída
+                    </button>
+                    ` : ''}
+                    <button class="btn-eliminar-notificacion" onclick="eliminarNotificacion('${notificacion.id}')">
+                        <span>🗑️</span> Eliminar
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+    
+    notificacionesDiv.innerHTML = html;
+    
+    // Actualizar contador de notificaciones no leídas
+    const notificacionesNoLeidas = notisUsuario.filter(n => !n.leida).length;
+    if (notificacionesNoLeidas > 0) {
+        const tituloNotificaciones = document.querySelector('#estudiante .card:last-child h3');
+        if (tituloNotificaciones) {
+            const badgeExistente = tituloNotificaciones.querySelector('.contador-notificaciones');
+            if (badgeExistente) badgeExistente.remove();
+            
+            const badge = document.createElement('span');
+            badge.className = 'notificacion-badge badge-nueva contador-notificaciones';
+            badge.style.marginLeft = '10px';
+            badge.textContent = `${notificacionesNoLeidas} NUEVAS`;
+            tituloNotificaciones.appendChild(badge);
+        }
+    }
+}
+
+function marcarIndicacionComoVista(indicacionId, notificacionId = null) {
+    const indicacionIndex = indicaciones.findIndex(ind => ind.id === indicacionId);
+    
+    if (indicacionIndex !== -1) {
+        indicaciones[indicacionIndex].vista = true;
+        localStorage.setItem('indicaciones', JSON.stringify(indicaciones));
+        
+        // Si hay una notificación relacionada, marcarla como leída también
+        if (notificacionId) {
+            const notificacionIndex = notis.findIndex(n => n.id === notificacionId);
+            if (notificacionIndex !== -1) {
+                notis[notificacionIndex].leida = true;
+                localStorage.setItem('notis', JSON.stringify(notis));
+            }
+        }
+        
+        // Recargar notificaciones para actualizar la vista
+        cargarNotificaciones();
+        
+        mostrarMensaje('Indicación marcada como vista', 'exito', '✅');
+    }
+}
+
+function marcarNotificacionComoLeida(notificacionId) {
+    const notificacionIndex = notis.findIndex(n => n.id === notificacionId);
+    
+    if (notificacionIndex !== -1) {
+        notis[notificacionIndex].leida = true;
+        localStorage.setItem('notis', JSON.stringify(notis));
+        
+        // Actualizar vista
+        cargarNotificaciones();
+        
+        mostrarMensaje('Notificación marcada como leída', 'exito', '✅');
+    }
+}
+
+function marcarTodasComoLeidas() {
+    if (confirm('¿Marcar todas las notificaciones como leídas?')) {
+        notis.forEach(notificacion => {
+            if (notificacion.usuario === usuarioActual) {
+                notificacion.leida = true;
+            }
+        });
+        
+        localStorage.setItem('notis', JSON.stringify(notis));
+        
+        // Actualizar vista
+        cargarNotificaciones();
+        
+        mostrarMensaje('Todas las notificaciones marcadas como leídas', 'exito', '✅');
+    }
+}
+
+function eliminarNotificacion(notificacionId) {
+    if (confirm('¿Estás seguro de eliminar esta notificación?')) {
+        const notificacionIndex = notis.findIndex(n => n.id === notificacionId);
+        
+        if (notificacionIndex !== -1) {
+            notis.splice(notificacionIndex, 1);
+            localStorage.setItem('notis', JSON.stringify(notis));
+            
+            // Actualizar vista
+            cargarNotificaciones();
+            
+            mostrarMensaje('Notificación eliminada', 'exito', '✅');
+        }
+    }
+}
+
+function eliminarNotificaciones() {
+    if (confirm('¿Estás seguro de eliminar TODAS las notificaciones?')) {
+        const nuevasNotis = notis.filter(n => n.usuario !== usuarioActual);
+        
+        notis = nuevasNotis;
+        localStorage.setItem('notis', JSON.stringify(notis));
+        
+        cargarNotificaciones();
+        
+        mostrarMensaje('Todas las notificaciones eliminadas', 'exito', '✅');
+    }
+}
+
+// ========== FUNCIONES PARA CURSOS DISPONIBLES (ESTUDIANTE) ==========
+function toggleCursos() {
+    const listaCursosDiv = document.getElementById('listaCursos');
+    const btnCursos = document.getElementById('btnCursos');
+    
+    if (!cursosMostrados) {
+        cargarCursosDisponibles();
+        btnCursos.innerHTML = '<span>👁️</span> Ocultar Cursos';
+        btnCursos.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        cursosMostrados = true;
+    } else {
+        listaCursosDiv.innerHTML = '';
+        btnCursos.innerHTML = '<span>🔍</span> Ver Cursos Disponibles';
+        btnCursos.style.background = 'linear-gradient(135deg, #00dbde 0%, #fc00ff 100%)';
+        cursosMostrados = false;
+    }
+}
+
+function cargarCursosDisponibles() {
+    const listaCursosDiv = document.getElementById('listaCursos');
+    if (!listaCursosDiv) return;
+    
+    listaCursosDiv.innerHTML = '';
+    
+    // Cargar cursos desde localStorage
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    // Filtrar cursos rechazados en esta sesión
+    const cursosFiltrados = cursos.filter(curso => 
+        !cursosRechazadosEnSesion.includes(curso.id)
+    );
+    
+    if (!cursosFiltrados || cursosFiltrados.length === 0) {
+        listaCursosDiv.innerHTML = `
+            <div class="curso-disponible" style="text-align: center; padding: 40px;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 15px;">📭</span>
+                <h4 style="margin: 0 0 10px 0; color: #333;">No hay cursos disponibles</h4>
+                <p style="color: #666; margin: 0;">${
+                    cursosRechazadosEnSesion.length > 0 
+                    ? 'Has rechazado todos los cursos publicados.' 
+                    : 'Los profesores aún no han publicado cursos.'
+                }</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const titulo = document.createElement('h3');
+    titulo.style.cssText = 'color: #333; margin: 30px 0 20px 0; font-size: 1.5rem; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;';
+    titulo.innerHTML = `<span>📚</span> Cursos Disponibles de Profesores (${cursosFiltrados.length} disponibles)`;
+    listaCursosDiv.appendChild(titulo);
+    
+    // Ordenar por fecha de publicación (más recientes primero)
+    const cursosOrdenados = [...cursosFiltrados].sort((a, b) => {
+        if (a.fechaPublicacion && b.fechaPublicacion) {
+            return new Date(b.fechaPublicacion) - new Date(a.fechaPublicacion);
+        }
+        return 0;
+    });
+    
+    cursosOrdenados.forEach(curso => {
+        const cursoDiv = document.createElement('div');
+        cursoDiv.className = 'curso-disponible';
+        cursoDiv.dataset.cursoId = curso.id;
+        
+        let fechaMostrar = curso.fecha;
+        if (curso.fechaPublicacion) {
+            const fechaPub = new Date(curso.fechaPublicacion);
+            fechaMostrar = `${curso.fecha} (Publicado: ${fechaPub.toLocaleDateString('es-ES')})`;
+        }
+        
+        cursoDiv.innerHTML = `
+            <div class="curso-header">
+                <div class="curso-title">
+                    <h4>${curso.nombre || 'Curso sin nombre'}</h4>
+                    <div class="curso-profesor">
+                        <span>👨‍🏫</span>
+                        <strong>Profesor:</strong> ${curso.profesor || 'Desconocido'}
+                    </div>
+                </div>
+                <div class="curso-fecha">
+                    <span>📅</span> ${fechaMostrar}
+                </div>
+            </div>
+            
+            <div class="curso-details">
+                <p class="curso-descripcion">
+                    <strong>📋 Descripción:</strong> ${curso.descripcion || 'Sin descripción disponible'}
+                </p>
+                
+                ${curso.horarios && curso.horarios.length > 0 ? `
+                <div class="curso-horarios">
+                    ${curso.horarios.map(horario => 
+                        `<span class="horario-badge">🕐 ${horario}</span>`
+                    ).join('')}
+                </div>
+                ` : '<p style="color: #999;">No hay horarios definidos</p>'}
+            </div>
+            
+            <div class="curso-actions">
+                <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                    <div style="margin-bottom: 10px;">
+                        <label for="horarioSeleccionado_${curso.id}" style="display: block; margin-bottom: 5px; color: #333; font-weight: 600;">
+                            🕐 Selecciona el horario para este curso:
+                        </label>
+                        <select id="horarioSeleccionado_${curso.id}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: white;">
+                            <option value="">-- Selecciona un horario --</option>
+                            ${curso.horarios && curso.horarios.length > 0 ? 
+                                curso.horarios.map(horario => `<option value="${horario}">${horario}</option>`).join('') 
+                                : '<option value="">No hay horarios disponibles</option>'}
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-inscribirse" onclick="solicitarCurso('${curso.id}')" style="flex: 1; padding: 12px;">
+                            <span>📝</span> Solicitar Curso
+                        </button>
+                        <button class="logout-btn" onclick="rechazarCurso('${curso.id}')" style="flex: 1; padding: 12px;">
+                            <span>❌</span> Rechazar Curso
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        listaCursosDiv.appendChild(cursoDiv);
+    });
+    
+    mostrarMensaje(`Se encontraron ${cursosFiltrados.length} cursos disponibles`, 'info', '📚');
+}
+
+function mostrarHorarios() {
+    const fechaSeleccionada = document.getElementById('fechaCurso').value;
+    const horarioSelect = document.getElementById('horarioCurso');
+    
+    if (!fechaSeleccionada) {
+        horarioSelect.innerHTML = '<option value="">Selecciona un horario</option>';
+        return;
+    }
+    
+    horarioSelect.innerHTML = '<option value="">Selecciona un horario</option>';
+    
+    const horariosDisponibles = ["08:00 - 10:00", "10:30 - 12:30", "13:00 - 15:00", "15:30 - 17:30"];
+    horariosDisponibles.forEach(horario => {
+        const option = document.createElement('option');
+        option.value = horario;
+        option.textContent = horario;
+        horarioSelect.appendChild(option);
+    });
+}
+
+function enviarSolicitud() {
+    const nombreCurso = document.getElementById('cursoEstudiante').value.trim();
+    const descripcion = document.getElementById('descripcionCurso').value.trim();
+    const fecha = document.getElementById('fechaCurso').value;
+    const horario = document.getElementById('horarioCurso').value;
+    
+    if (!nombreCurso || !descripcion || !fecha || !horario) {
+        mostrarMensaje('Completa todos los campos', 'error', '❌');
+        return;
+    }
+    
+    mostrarLoader(true);
+    
+    setTimeout(() => {
+        const estudiante = users.find(x => x.u === usuarioActual);
+        if (!estudiante) {
+            mostrarMensaje('Usuario no encontrado', 'error', '❌');
+            mostrarLoader(false);
+            return;
+        }
+        
+        const solicitudManual = {
+            id: 'solicitud_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            estudiante: usuarioActual,
+            cursoNombre: nombreCurso,
+            descripcion: descripcion, // Asegúrate de que esta propiedad esté incluida
+            fechaSolicitada: fecha,
+            horarioSolicitado: horario,
+            fechaSolicitud: new Date().toISOString(),
+            estado: 'pendiente',
+            tipo: 'manual'
+        };
+        
+        solicitudes.push(solicitudManual);
+        localStorage.setItem('solicitudes', JSON.stringify(solicitudes));
+        
+        const nuevaNotificacion = {
+            id: 'not_manual_' + Date.now(),
+            usuario: usuarioActual,
+            mensaje: `Has solicitado un curso personalizado: "${nombreCurso}"`,
+            fecha: new Date().toISOString(),
+            tipo: 'solicitud_manual',
+            leida: false,
+            solicitudId: solicitudManual.id
+        };
+        
+        notis.push(nuevaNotificacion);
+        localStorage.setItem('notis', JSON.stringify(notis));
+        
+        document.getElementById('cursoEstudiante').value = '';
+        document.getElementById('descripcionCurso').value = '';
+        document.getElementById('fechaCurso').value = '';
+        document.getElementById('horarioCurso').innerHTML = '<option value="">Selecciona un horario</option>';
+        
+        cargarNotificaciones();
+        
+        mostrarLoader(false);
+        mostrarMensaje('Solicitud enviada exitosamente', 'exito', '✅');
+        
+    }, 1000);
+}
+
+function solicitarCurso(cursoId) {
+    // Cargar cursos desde localStorage
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    const curso = cursos.find(c => c.id === cursoId);
+    if (!curso) {
+        mostrarMensaje('El curso no existe', 'error', '❌');
+        return;
+    }
+    
+    const horarioSeleccionado = document.getElementById(`horarioSeleccionado_${cursoId}`).value;
+    
+    if (!horarioSeleccionado) {
+        mostrarMensaje('Por favor selecciona un horario para el curso', 'error', '❌');
+        return;
+    }
+    
+    // Crear un modal para que el estudiante agregue una descripción opcional
+    const descripcion = prompt(`¿Deseas agregar una descripción o comentario sobre el curso "${curso.nombre}"? (opcional):`, '');
+    
+    const estudiante = users.find(x => x.u === usuarioActual);
+    if (estudiante && estudiante.cursosInscritos) {
+        const yaInscrito = estudiante.cursosInscritos.some(item => 
+            typeof item === 'object' ? item.cursoId === cursoId : item === cursoId
+        );
+        if (yaInscrito) {
+            mostrarMensaje('Ya estás inscrito en este curso', 'error', '❌');
+            return;
+        }
+    }
+    
+    if (confirm(`¿Deseas solicitar el curso "${curso.nombre}" impartido por ${curso.profesor} en el horario ${horarioSeleccionado}?`)) {
+        mostrarLoader(true);
+        
+        setTimeout(() => {
+            const userIndex = users.findIndex(x => x.u === usuarioActual);
+            if (userIndex !== -1) {
+                if (!users[userIndex].cursosInscritos) {
+                    users[userIndex].cursosInscritos = [];
+                }
+                
+                users[userIndex].cursosInscritos.push({
+                    cursoId: cursoId,
+                    cursoNombre: curso.nombre,
+                    profesor: curso.profesor,
+                    horario: horarioSeleccionado,
+                    fechaSolicitud: new Date().toISOString(),
+                    estado: 'pendiente',
+                    descripcion: descripcion || '' // Agregar descripción opcional
+                });
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                const nuevaNotificacion = {
+                    id: 'not_solicitud_' + Date.now(),
+                    usuario: usuarioActual,
+                    mensaje: `Has solicitado el curso "${curso.nombre}"`,
+                    fecha: new Date().toISOString(),
+                    tipo: 'solicitud_curso',
+                    leida: false,
+                    cursoId: cursoId
+                };
+                
+                notis.push(nuevaNotificacion);
+                localStorage.setItem('notis', JSON.stringify(notis));
+                
+                const solicitudProfesor = {
+                    id: 'solicitud_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    estudiante: usuarioActual,
+                    cursoId: cursoId,
+                    cursoNombre: curso.nombre,
+                    horarioSolicitado: horarioSeleccionado,
+                    fechaSolicitud: new Date().toISOString(),
+                    estado: 'pendiente',
+                    descripcion: descripcion || '' // AGREGADO: Incluir descripción en la solicitud
+                };
+                
+                solicitudes.push(solicitudProfesor);
+                localStorage.setItem('solicitudes', JSON.stringify(solicitudes));
+                
+                mostrarMensaje(`¡Solicitud exitosa! Has solicitado "${curso.nombre}" en ${horarioSeleccionado}`, 'exito', '✅');
+                
+                cargarNotificaciones();
+            }
+            
+            mostrarLoader(false);
+        }, 1000);
+    }
+}
+
+function rechazarCurso(cursoId) {
+    // Cargar cursos desde localStorage
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    const curso = cursos.find(c => c.id === cursoId);
+    if (!curso) {
+        mostrarMensaje('El curso no existe', 'error', '❌');
+        return;
+    }
+    
+    if (confirm(`¿Estás seguro de que no te interesa el curso "${curso.nombre}"? Esta acción no se puede deshacer en esta sesión.`)) {
+        if (!cursosRechazadosEnSesion.includes(cursoId)) {
+            cursosRechazadosEnSesion.push(cursoId);
+        }
+        
+        // Eliminar inmediatamente el curso de la vista
+        const cursoDiv = document.querySelector(`#horarioSeleccionado_${cursoId}`)?.closest('.curso-disponible');
+        if (cursoDiv) {
+            cursoDiv.remove();
+        }
+        
+        // Crear notificación
+        const nuevaNotificacion = {
+            id: 'not_rechazo_' + Date.now(),
+            usuario: usuarioActual,
+            mensaje: `Has rechazado el curso "${curso.nombre}"`,
+            fecha: new Date().toISOString(),
+            tipo: 'rechazo_curso',
+            leida: false,
+            cursoId: cursoId
+        };
+        
+        notis.push(nuevaNotificacion);
+        localStorage.setItem('notis', JSON.stringify(notis));
+        
+        // Actualizar contador de cursos disponibles
+        const cursosDisponibles = document.querySelectorAll('#listaCursos .curso-disponible').length;
+        mostrarMensaje(`Has rechazado el curso "${curso.nombre}". Cursos disponibles: ${cursosDisponibles}`, 'info', '❌');
+        
+        cargarNotificaciones();
+        
+        // Si no hay más cursos, mostrar mensaje
+        if (cursosDisponibles === 0) {
+            const listaCursosDiv = document.getElementById('listaCursos');
+            const tituloCursos = listaCursosDiv.querySelector('h3');
+            if (tituloCursos) {
+                const mensajeNoCursos = document.createElement('div');
+                mensajeNoCursos.className = 'curso-disponible';
+                mensajeNoCursos.style.textAlign = 'center';
+                mensajeNoCursos.style.padding = '40px';
+                mensajeNoCursos.innerHTML = `
+                    <span style="font-size: 3rem; display: block; margin-bottom: 15px;">📭</span>
+                    <h4 style="margin: 0 0 10px 0; color: #333;">No hay más cursos disponibles</h4>
+                    <p style="color: #666; margin: 0;">Has rechazado todos los cursos publicados.</p>
+                `;
+                listaCursosDiv.appendChild(mensajeNoCursos);
+            }
+        }
+    }
+}
+
+// ========== FUNCIONES PARA HORARIOS DEL PROFESOR ==========
+function cargarCheckboxHorarios() {
+    const checkboxHorariosDiv = document.getElementById('checkboxHorarios');
+    if (!checkboxHorariosDiv) return;
+    
+    checkboxHorariosDiv.innerHTML = '';
+    
+    const horariosDisponibles = ["08:00 - 10:00", "10:30 - 12:30", "13:00 - 15:00", "15:30 - 17:30"];
+    horariosDisponibles.forEach((horario, index) => {
+        const checkboxDiv = document.createElement('div');
+        checkboxDiv.className = 'checkbox-horario';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `horario${index}`;
+        checkbox.value = horario;
+        
+        const label = document.createElement('label');
+        label.htmlFor = `horario${index}`;
+        label.textContent = horario;
+        
+        checkboxDiv.appendChild(checkbox);
+        checkboxDiv.appendChild(label);
+        checkboxHorariosDiv.appendChild(checkboxDiv);
+    });
+}
+
+function cargarHorariosProfesor() {
+    const horariosProfesorDiv = document.getElementById('horariosProfesor');
+    if (!horariosProfesorDiv) return;
+    
+    horariosProfesorDiv.innerHTML = '';
+    
+    // Cargar cursos desde localStorage
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    const cursosProfesor = cursos.filter(curso => curso.profesor === usuarioActual);
+    
+    if (cursosProfesor.length === 0) {
+        horariosProfesorDiv.innerHTML = '<p>No has publicado ningún curso aún.</p>';
+        return;
+    }
+    
+    cursosProfesor.forEach(curso => {
+        const cursoDiv = document.createElement('div');
+        cursoDiv.className = 'curso-disponible';
+        
+        cursoDiv.innerHTML = `
+            <div class="curso-header">
+                <div class="curso-title">
+                    <h4>${curso.nombre}</h4>
+                    <div class="curso-profesor">
+                        <span>👨‍🏫</span>
+                        <strong>Profesor:</strong> ${usuarioActual} (Tú)
+                    </div>
+                </div>
+                <div class="curso-fecha">
+                    <span>📅</span> ${curso.fecha}
+                </div>
+            </div>
+            
+            <div class="curso-details">
+                <p class="curso-descripcion">
+                    <strong>📋 Descripción:</strong> ${curso.descripcion}
+                </p>
+                
+                <div class="curso-horarios">
+                    ${curso.horarios.map(horario => 
+                        `<span class="horario-badge">🕐 ${horario}</span>`
+                    ).join('')}
+                </div>
+            </div>
+            
+            <div class="curso-actions">
+                <button class="back-btn" onclick="editarCurso('${curso.id}')" style="padding: 10px 20px;">
+                    <span>✏️</span> Editar
+                </button>
+                <button class="logout-btn" onclick="eliminarCurso('${curso.id}')" style="padding: 10px 20px;">
+                    <span>🗑️</span> Eliminar
+                </button>
+            </div>
+        `;
+        
+        horariosProfesorDiv.appendChild(cursoDiv);
+    });
+}
+
+function publicarCurso() {
+    const nombreCurso = document.getElementById('nombreCurso').value.trim();
+    const descripcion = document.getElementById('descripcionTemasCurso').value.trim();
+    const fecha = document.getElementById('fechaCursoProfesor').value;
+    
+    if (!nombreCurso || !descripcion || !fecha) {
+        mostrarMensaje('Completa todos los campos', 'error', '❌');
+        return;
+    }
+    
+    const horariosDisponibles = ["08:00 - 10:00", "10:30 - 12:30", "13:00 - 15:00", "15:30 - 17:30"];
+    const horariosSeleccionados = [];
+    const checkboxes = document.querySelectorAll('#checkboxHorarios input[type="checkbox"]:checked');
+    
+    if (checkboxes.length === 0) {
+        mostrarMensaje('Selecciona al menos un horario', 'error', '❌');
+        return;
+    }
+    
+    checkboxes.forEach(checkbox => {
+        horariosSeleccionados.push(checkbox.value);
+    });
+    
+    const nuevoCurso = {
+        id: 'curso_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+        nombre: nombreCurso,
+        descripcion: descripcion,
+        fecha: fecha,
+        horarios: horariosSeleccionados,
+        profesor: usuarioActual,
+        fechaPublicacion: new Date().toISOString()
+    };
+    
+    // Cargar cursos existentes
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    cursos.push(nuevoCurso);
+    localStorage.setItem('cursos', JSON.stringify(cursos));
+    
+    document.getElementById('nombreCurso').value = '';
+    document.getElementById('descripcionTemasCurso').value = '';
+    document.getElementById('fechaCursoProfesor').value = '';
+    
+    document.querySelectorAll('#checkboxHorarios input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+    });
+    
+    cargarHorariosProfesor();
+    
+    mostrarMensaje('Curso publicado exitosamente', 'exito', '✅');
+}
+
+function editarCurso(cursoId) {
+    // Cargar cursos desde localStorage
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    const curso = cursos.find(c => c.id === cursoId);
+    if (!curso) return;
+    
+    document.getElementById('nombreCurso').value = curso.nombre;
+    document.getElementById('descripcionTemasCurso').value = curso.descripcion;
+    document.getElementById('fechaCursoProfesor').value = curso.fecha;
+    
+    document.querySelectorAll('#checkboxHorarios input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = curso.horarios.includes(checkbox.value);
+    });
+    
+    eliminarCurso(cursoId, false);
+    
+    mostrarMensaje('Edita los datos del curso y haz clic en "Publicar Curso" para guardar cambios', 'info', '✏️');
+}
+
+function eliminarCurso(cursoId, mostrarMensajeConfirmacion = true) {
+    if (mostrarMensajeConfirmacion && !confirm('¿Estás seguro de eliminar este curso?')) {
+        return;
+    }
+    
+    // Cargar cursos desde localStorage
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    cursos = cursos.filter(c => c.id !== cursoId);
+    localStorage.setItem('cursos', JSON.stringify(cursos));
+    
+    cargarHorariosProfesor();
+    
+    if (mostrarMensajeConfirmacion) {
+        mostrarMensaje('Curso eliminado exitosamente', 'exito', '✅');
+    }
+}
+
+// ========== FUNCIONES PARA INDICACIONES DEL PROFESOR ==========
+function cargarSolicitudesProfesor() {
+    const solicitudesDiv = document.getElementById('solicitudes');
+    if (!solicitudesDiv) return;
+    
+    // Cargar cursos desde localStorage
+    cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    
+    const cursosProfesor = cursos.filter(curso => curso.profesor === usuarioActual);
+    const cursosIds = cursosProfesor.map(curso => curso.id);
+    
+    // Filtrar solicitudes del profesor
+    const solicitudesProfesor = solicitudes.filter(solicitud => 
+        cursosIds.includes(solicitud.cursoId) || 
+        (solicitud.tipo === 'manual' && solicitud.estado === 'pendiente')
+    );
+    
+    if (solicitudesProfesor.length === 0) {
+        solicitudesDiv.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #666;">
+                <span style="font-size: 3rem; display: block; margin-bottom: 15px;">📭</span>
+                <p>No hay solicitudes pendientes.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = '';
+    solicitudesProfesor.forEach(solicitud => {
+        const fechaSolicitud = new Date(solicitud.fechaSolicitud).toLocaleDateString('es-ES');
+        const horaSolicitud = new Date(solicitud.fechaSolicitud).toLocaleTimeString('es-ES', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+        
+        // Obtener información del curso si es una solicitud de curso publicado
+        let cursoInfo = '';
+        if (solicitud.cursoId) {
+            const curso = cursos.find(c => c.id === solicitud.cursoId);
+            if (curso) {
+                cursoInfo = `<p class="solicitud-curso"><strong>📚 Curso:</strong> ${curso.nombre}</p>`;
+            }
+        } else if (solicitud.cursoNombre) {
+            cursoInfo = `<p class="solicitud-curso"><strong>📚 Curso solicitado:</strong> ${solicitud.cursoNombre}</p>`;
+        }
+        
+        // AGREGADO: Mostrar descripción detallada si existe
+        let descripcionHtml = '';
+        if (solicitud.descripcion) {
+            descripcionHtml = `
+                <div class="descripcion-detallada">
+                    <p class="descripcion-titulo">
+                        <span>📋</span> Descripción detallada del estudiante:
+                    </p>
+                    <p class="descripcion-contenido">
+                        ${solicitud.descripcion.replace(/\n/g, '<br>')}
+                    </p>
+                </div>
+            `;
+        }
+        
+        html += `
+            <div class="solicitud-item" data-id="${solicitud.id}">
+                <div class="solicitud-header">
+                    <div class="solicitud-info">
+                        <div class="solicitud-estudiante">
+                            <span>👨‍🎓</span> ${solicitud.estudiante}
+                            <span class="solicitud-fecha" style="font-size: 0.85rem; margin-left: 15px;">
+                                📅 ${fechaSolicitud} - ${horaSolicitud}
+                            </span>
+                        </div>
+                        ${cursoInfo}
+                        <p class="solicitud-horario">
+                            <span>🕐</span>
+                            <strong>Horario solicitado:</strong> ${solicitud.horarioSolicitado}
+                        </p>
+                        ${solicitud.fechaSolicitada ? 
+                            `<p class="solicitud-fecha"><strong>📅 Fecha solicitada:</strong> ${solicitud.fechaSolicitada}</p>` : ''}
+                    </div>
+                    <div class="solicitud-estado estado-${solicitud.estado}">
+                        ${solicitud.estado.toUpperCase()}
+                    </div>
+                </div>
+                
+                <!-- AGREGADO: Mostrar descripción detallada aquí -->
+                ${descripcionHtml}
+                
+                <div class="solicitud-acciones">
+                    ${solicitud.estado === 'pendiente' ? `
+                        <button class="btn-aprobar" onclick="aprobarSolicitud('${solicitud.id}')">
+                            <span>✅</span> Aprobar
+                        </button>
+                        <button class="btn-rechazar" onclick="rechazarSolicitud('${solicitud.id}')">
+                            <span>❌</span> Rechazar
+                        </button>
+                    ` : ''}
+                    
+                    <button class="btn-enviar-indicacion" onclick="mostrarFormularioIndicaciones('${solicitud.id}', '${solicitud.estudiante}')">
+                        <span>📨</span> Enviar Indicaciones
+                    </button>
+                </div>
+                
+                <!-- Formulario de indicaciones (oculto por defecto) -->
+                <div class="panel-indicaciones" id="panelIndicaciones_${solicitud.id}">
+                    <div class="form-indicaciones">
+                        <textarea id="mensajeIndicacion_${solicitud.id}" 
+                                  class="input-indicaciones" 
+                                  placeholder="✏️ Escribe las indicaciones para ${solicitud.estudiante}..." 
+                                  rows="3"></textarea>
+                        <input type="text" id="enlaceCurso_${solicitud.id}" 
+                               class="input-indicaciones" 
+                               placeholder="🔗 Enlace del curso (opcional)">
+                        <button class="btn-enviar-indicaciones" onclick="enviarIndicacion('${solicitud.id}', '${solicitud.estudiante}')">
+                            <span>📨</span> Enviar Indicaciones
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Indicaciones existentes para esta solicitud -->
+                <div id="indicacionesExistente_${solicitud.id}"></div>
+            </div>
+        `;
+    });
+    
+    solicitudesDiv.innerHTML = html;
+    
+    // Cargar indicaciones existentes para cada solicitud
+    solicitudesProfesor.forEach(solicitud => {
+        cargarIndicacionesSolicitud(solicitud.id, solicitud.estudiante);
+    });
+}
+
+function mostrarFormularioIndicaciones(solicitudId, estudiante) {
+    const panel = document.getElementById(`panelIndicaciones_${solicitudId}`);
+    const formularios = document.querySelectorAll('.panel-indicaciones');
+    
+    // Ocultar todos los formularios primero
+    formularios.forEach(form => {
+        form.classList.remove('visible');
+    });
+    
+    // Mostrar/ocultar el formulario actual
+    if (panel.classList.contains('visible')) {
+        panel.classList.remove('visible');
+    } else {
+        panel.classList.add('visible');
+        
+        // Poner el foco en el textarea
+        setTimeout(() => {
+            const textarea = document.getElementById(`mensajeIndicacion_${solicitudId}`);
+            if (textarea) textarea.focus();
+        }, 100);
+    }
+}
+
+function cargarIndicacionesSolicitud(solicitudId, estudiante) {
+    const contenedor = document.getElementById(`indicacionesExistente_${solicitudId}`);
+    if (!contenedor) return;
+    
+    // Filtrar indicaciones para esta solicitud/estudiante
+    const indicacionesFiltradas = indicaciones.filter(ind => 
+        ind.estudiante === estudiante && ind.profesor === usuarioActual && ind.solicitudId === solicitudId
+    );
+    
+    if (indicacionesFiltradas.length === 0) {
+        contenedor.innerHTML = '';
+        return;
+    }
+    
+    // Ordenar por fecha (más recientes primero)
+    indicacionesFiltradas.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+    
+    let html = '<div style="margin-top: 20px;"><h4 style="margin-bottom: 15px; color: #555; font-size: 1.1rem;">📋 Indicaciones enviadas:</h4>';
+    
+    indicacionesFiltradas.forEach(indicacion => {
+        const fecha = new Date(indicacion.fecha).toLocaleDateString('es-ES');
+        const hora = new Date(indicacion.fecha).toLocaleTimeString('es-ES', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+        
+        html += `
+            <div class="indicacion-item">
+                <div class="indicacion-header">
+                    <div class="indicacion-estudiante">
+                        <span>📨</span>
+                        <strong>Para:</strong> ${indicacion.estudiante}
+                    </div>
+                    <div class="indicacion-fecha">
+                        📅 ${fecha} - ${hora}
+                    </div>
+                </div>
+                
+                <div class="indicacion-mensaje">
+                    ${indicacion.mensaje.replace(/\n/g, '<br>')}
+                </div>
+                
+                ${indicacion.enlaceCurso ? `
+                <a href="${indicacion.enlaceCurso}" target="_blank" class="indicacion-enlace">
+                    🔗 ${indicacion.enlaceCurso}
+                </a>
+                ` : ''}
+                
+                <div class="indicacion-estado ${indicacion.vista ? 'indicacion-vista' : 'indicacion-pendiente'}">
+                    ${indicacion.vista ? '✅ Vista por el estudiante' : '⏳ Pendiente de revisión'}
+                </div>
+                
+                <div class="indicacion-acciones">
+                    ${!indicacion.vista ? `
+                    <button class="btn-marcar-vista" onclick="marcarIndicacionComoVista('${indicacion.id}')">
+                        ✅ Marcar como vista
+                    </button>
+                    ` : ''}
+                    <button class="btn-eliminar-indicacion" onclick="eliminarIndicacion('${indicacion.id}')">
+                        🗑️ Eliminar
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    contenedor.innerHTML = html;
+}
+
+function enviarIndicacion(solicitudId, estudiante) {
+    const mensaje = document.getElementById(`mensajeIndicacion_${solicitudId}`).value.trim();
+    const enlaceCurso = document.getElementById(`enlaceCurso_${solicitudId}`).value.trim();
+    
+    if (!mensaje) {
+        mostrarMensaje('Escribe las indicaciones primero', 'error', '❌');
+        return;
+    }
+    
+    // Buscar información de la solicitud
+    const solicitud = solicitudes.find(s => s.id === solicitudId);
+    if (!solicitud) {
+        mostrarMensaje('Solicitud no encontrada', 'error', '❌');
+        return;
+    }
+    
+    // Crear la indicación
+    const nuevaIndicacion = {
+        id: 'ind_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+        profesor: usuarioActual,
+        estudiante: estudiante,
+        mensaje: mensaje,
+        enlaceCurso: enlaceCurso || null,
+        fecha: new Date().toISOString(),
+        vista: false,
+        profesorNombre: usuarioActual,
+        solicitudId: solicitudId,
+        cursoId: solicitud.cursoId,
+        cursoNombre: solicitud.cursoNombre
+    };
+    
+    // Guardar en localStorage
+    indicaciones.push(nuevaIndicacion);
+    localStorage.setItem('indicaciones', JSON.stringify(indicaciones));
+    
+    // Crear notificación para el estudiante
+    const cursoNombre = solicitud.cursoNombre || (solicitud.cursoId ? (cursos.find(c => c.id === solicitud.cursoId)?.nombre || 'curso') : 'curso');
+    
+    const notificacionEstudiante = {
+        id: 'not_ind_' + Date.now(),
+        usuario: estudiante,
+        mensaje: `📨 El profesor ${usuarioActual} te ha enviado indicaciones para el curso "${cursoNombre}"`,
+        fecha: new Date().toISOString(),
+        tipo: 'indicacion',
+        leida: false,
+        indicacionId: nuevaIndicacion.id,
+        solicitudId: solicitudId,
+        cursoId: solicitud.cursoId
+    };
+    
+    notis.push(notificacionEstudiante);
+    localStorage.setItem('notis', JSON.stringify(notis));
+    
+    // Limpiar formulario
+    document.getElementById(`mensajeIndicacion_${solicitudId}`).value = '';
+    document.getElementById(`enlaceCurso_${solicitudId}`).value = '';
+    
+    // Ocultar formulario
+    const panel = document.getElementById(`panelIndicaciones_${solicitudId}`);
+    panel.classList.remove('visible');
+    
+    // Actualizar lista de indicaciones
+    cargarIndicacionesSolicitud(solicitudId, estudiante);
+    
+    mostrarMensaje(`Indicaciones enviadas a ${estudiante}`, 'exito', '✅');
+    
+    // Recargar las solicitudes del profesor para reflejar el cambio
+    cargarSolicitudesProfesor();
+}
+
+function eliminarIndicacion(indicacionId) {
+    if (!confirm('¿Estás seguro de eliminar esta indicación?')) {
+        return;
+    }
+    
+    const indicacionIndex = indicaciones.findIndex(ind => ind.id === indicacionId);
+    if (indicacionIndex === -1) return;
+    
+    const indicacion = indicaciones[indicacionIndex];
+    indicaciones.splice(indicacionIndex, 1);
+    localStorage.setItem('indicaciones', JSON.stringify(indicaciones));
+    
+    // Actualizar vista en la interfaz
+    const indicacionElement = document.querySelector(`[data-id="${indicacion.solicitudId}"]`);
+    if (indicacionElement) {
+        cargarIndicacionesSolicitud(indicacion.solicitudId, indicacion.estudiante);
+    }
+    
+    mostrarMensaje('Indicación eliminada', 'exito', '✅');
+}
+
+// ========== FUNCIONES DE SOLICITUDES DEL PROFESOR ==========
+function aprobarSolicitud(solicitudId) {
+    const solicitudIndex = solicitudes.findIndex(s => s.id === solicitudId);
+    if (solicitudIndex !== -1) {
+        solicitudes[solicitudIndex].estado = 'aprobada';
+        localStorage.setItem('solicitudes', JSON.stringify(solicitudes));
+        
+        // Crear notificación para el estudiante
+        const solicitud = solicitudes[solicitudIndex];
+        const cursoNombre = solicitud.cursoNombre || (solicitud.cursoId ? (cursos.find(c => c.id === solicitud.cursoId)?.nombre || 'curso') : 'curso');
+        
+        const notificacionEstudiante = {
+            id: 'not_apr_' + Date.now(),
+            usuario: solicitud.estudiante,
+            mensaje: `✅ Tu solicitud para el curso "${cursoNombre}" ha sido aprobada por el profesor ${usuarioActual}`,
+            fecha: new Date().toISOString(),
+            tipo: 'aprobada',
+            leida: false,
+            cursoId: solicitud.cursoId,
+            solicitudId: solicitudId
+        };
+        
+        notis.push(notificacionEstudiante);
+        localStorage.setItem('notis', JSON.stringify(notis));
+        
+        mostrarMensaje('Solicitud aprobada exitosamente', 'exito', '✅');
+        cargarSolicitudesProfesor();
+    }
+}
+
+function rechazarSolicitud(solicitudId) {
+    const solicitudIndex = solicitudes.findIndex(s => s.id === solicitudId);
+    if (solicitudIndex !== -1) {
+        solicitudes[solicitudIndex].estado = 'rechazada';
+        localStorage.setItem('solicitudes', JSON.stringify(solicitudes));
+        
+        // Crear notificación para el estudiante
+        const solicitud = solicitudes[solicitudIndex];
+        const cursoNombre = solicitud.cursoNombre || (solicitud.cursoId ? (cursos.find(c => c.id === solicitud.cursoId)?.nombre || 'curso') : 'curso');
+        
+        const notificacionEstudiante = {
+            id: 'not_rech_' + Date.now(),
+            usuario: solicitud.estudiante,
+            mensaje: `❌ Tu solicitud para el curso "${cursoNombre}" ha sido rechazada por el profesor ${usuarioActual}`,
+            fecha: new Date().toISOString(),
+            tipo: 'rechazada',
+            leida: false,
+            cursoId: solicitud.cursoId,
+            solicitudId: solicitudId
+        };
+        
+        notis.push(nuevaNotificacion);
+        localStorage.setItem('notis', JSON.stringify(notis));
+        
+        mostrarMensaje('Solicitud rechazada', 'info', '❌');
+        cargarSolicitudesProfesor();
+    }
+}
+
+// ========== FUNCIONES DE PAGO ==========
+function seleccionarPlan(plan) {
+    planSeleccionado = plan;
+    mostrarPago();
+}
+
+function cargarResumenPlan(plan) {
+    const planes = {
+        'basico': {
+            nombre: 'Plan Básico',
+            precio: '9.99',
+            icono: '🎓'
+        },
+        'avanzado': {
+            nombre: 'Plan Avanzado',
+            precio: '24.99',
+            icono: '🚀'
+        },
+        'premium': {
+            nombre: 'Plan Premium',
+            precio: '49.99',
+            icono: '🏆'
+        }
+    };
+    
+    const planData = planes[plan] || planes['basico'];
+    
+    document.getElementById('planIconResumen').textContent = planData.icono;
+    document.getElementById('planNombreResumen').textContent = planData.nombre;
+    document.getElementById('planPrecioResumen').innerHTML = `$${planData.precio}<span style="font-size: 1rem; color: #aaa;">/mes</span>`;
+}
+
+function actualizarPasos() {
+    document.querySelectorAll('.pago-content').forEach(paso => {
+        paso.classList.remove('active');
+    });
+    
+    const pasoActual = document.getElementById(`pagoStep${pasosPago}`);
+    if (pasoActual) {
+        pasoActual.classList.add('active');
+    }
+    
+    document.querySelectorAll('.step').forEach((paso, index) => {
+        paso.classList.remove('active', 'completed');
+        
+        if (index + 1 === pasosPago) {
+            paso.classList.add('active');
+        } else if (index + 1 < pasosPago) {
+            paso.classList.add('completed');
+        }
+    });
+}
+
+function siguientePaso(paso) {
+    if (paso === 2 && pasosPago === 1) {
+        if (!planSeleccionado) {
+            mostrarMensaje('Por favor selecciona un plan primero', 'error', '❌');
+            return;
+        }
+    }
+    
+    if (paso === 3 && pasosPago === 2) {
+        if (!metodoPagoSeleccionado) {
+            mostrarMensaje('Por favor selecciona un método de pago', 'error', '❌');
+            return;
+        }
+        
+        if (metodoPagoSeleccionado === 'tarjeta') {
+            if (!validarDatosTarjeta()) {
+                return;
+            }
+        }
+        
+        procesarPago();
+        return;
+    }
+    
+    pasosPago = paso;
+    actualizarPasos();
+}
+
+function anteriorPaso() {
+    if (pasosPago > 1) {
+        pasosPago--;
+        actualizarPasos();
+    }
+}
+
+function seleccionarMetodo(metodo) {
+    metodoPagoSeleccionado = metodo;
+    
+    document.querySelectorAll('.metodo-pago').forEach(metodoElement => {
+        metodoElement.classList.remove('selected');
+    });
+    
+    const metodoElement = document.getElementById(`metodo${metodo.charAt(0).toUpperCase() + metodo.slice(1)}`);
+    if (metodoElement) {
+        metodoElement.classList.add('selected');
+    }
+    
+    document.querySelectorAll('.form-pago').forEach(form => {
+        form.style.display = 'none';
+    });
+    
+    const formElement = document.getElementById(`form${metodo.charAt(0).toUpperCase() + metodo.slice(1)}`);
+    if (formElement) {
+        formElement.style.display = 'block';
+    }
+    
+    if (metodo === 'tarjeta') {
+        agregarFormatosTarjeta();
+    }
+}
+
+function agregarFormatosTarjeta() {
+    const numeroTarjetaInput = document.getElementById('numeroTarjeta');
+    const expiracionInput = document.getElementById('expiracionTarjeta');
+    
+    if (numeroTarjetaInput) {
+        numeroTarjetaInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            let formattedValue = '';
+            
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+            
+            e.target.value = formattedValue.substring(0, 19);
+        });
+    }
+    
+    if (expiracionInput) {
+        expiracionInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length >= 2) {
+                e.target.value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            } else {
+                e.target.value = value;
+            }
+        });
+        
+        expiracionInput.addEventListener('blur', function(e) {
+            let value = e.target.value.trim();
+            if (value && value.length === 5 && value.includes('/')) {
+                const [mesStr, anioStr] = value.split('/');
+                const mes = parseInt(mesStr);
+                
+                if (mes < 1 || mes > 12) {
+                    mostrarMensaje('El mes debe estar entre 01 y 12', 'error', '❌', 2000);
+                    e.target.value = mesStr + '/';
+                }
+            }
+        });
+    }
+}
+
+function validarDatosTarjeta() {
+    const numeroTarjeta = document.getElementById('numeroTarjeta').value.trim();
+    const nombreTarjeta = document.getElementById('nombreTarjeta').value.trim();
+    const expiracionTarjeta = document.getElementById('expiracionTarjeta').value.trim();
+    const cvvTarjeta = document.getElementById('cvvTarjeta').value.trim();
+    
+    const numeroLimpio = numeroTarjeta.replace(/\s/g, '');
+    
+    if (!numeroLimpio || numeroLimpio.length < 16 || numeroLimpio.length > 19) {
+        mostrarMensaje('Número de tarjeta inválido. Debe tener entre 16 y 19 dígitos.', 'error', '❌');
+        return false;
+    }
+    
+    if (!/^\d+$/.test(numeroLimpio)) {
+        mostrarMensaje('El número de tarjeta solo puede contener dígitos.', 'error', '❌');
+        return false;
+    }
+    
+    if (!nombreTarjeta || nombreTarjeta.length < 3) {
+        mostrarMensaje('Por favor ingresa el nombre completo en la tarjeta.', 'error', '❌');
+        return false;
+    }
+    
+    if (!expiracionTarjeta || !/^\d{2}\/\d{2}$/.test(expiracionTarjeta)) {
+        mostrarMensaje('Fecha de expiración inválida. Usa el formato MM/AA.', 'error', '❌');
+        return false;
+    }
+    
+    const [mesStr, anioStr] = expiracionTarjeta.split('/');
+    const mes = parseInt(mesStr);
+    const anio = parseInt('20' + anioStr);
+    const ahora = new Date();
+    const anioActual = ahora.getFullYear();
+    const mesActual = ahora.getMonth() + 1;
+    
+    if (mes < 1 || mes > 12) {
+        mostrarMensaje('Mes inválido. Debe estar entre 01 y 12.', 'error', '❌');
+        return false;
+    }
+    
+    if (anio < anioActual || (anio === anioActual && mes < mesActual)) {
+        mostrarMensaje('La tarjeta está expirada.', 'error', '❌');
+        return false;
+    }
+    
+    const cvvLimpio = cvvTarjeta.replace(/\D/g, '');
+    
+    if (!cvvLimpio || cvvLimpio.length < 3 || cvvLimpio.length > 4) {
+        mostrarMensaje('CVV inválido. Debe tener 3 o 4 dígitos numéricos.', 'error', '❌');
+        return false;
+    }
+    
+    return true;
+}
+
+function procesarPago() {
+    if (!metodoPagoSeleccionado) {
+        mostrarMensaje('Por favor selecciona un método de pago', 'error', '❌');
+        return;
+    }
+    
+    if (metodoPagoSeleccionado === 'tarjeta') {
+        if (!validarDatosTarjeta()) {
+            return;
+        }
+    }
+    
+    mostrarPagoLoader(true);
+    
+    let progreso = 0;
+    const intervalo = setInterval(() => {
+        progreso += 10;
+        document.getElementById('pagoProgressBar').style.width = progreso + '%';
+        
+        if (progreso === 30) {
+            document.getElementById('pagoLoaderText').textContent = 'Verificando datos...';
+        } else if (progreso === 60) {
+            document.getElementById('pagoLoaderText').textContent = 'Procesando pago...';
+        } else if (progreso === 90) {
+            document.getElementById('pagoLoaderText').textContent = 'Confirmando transacción...';
+        } else if (progreso >= 100) {
+            clearInterval(intervalo);
+            
+            setTimeout(() => {
+                mostrarPagoLoader(false);
+                
+                const numeroTransaccion = 'TXN-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+                
+                document.getElementById('numeroTransaccion').textContent = numeroTransaccion;
+                document.getElementById('comprobantePlan').textContent = document.getElementById('planNombreResumen').textContent;
+                document.getElementById('comprobanteMonto').textContent = document.getElementById('planPrecioResumen').textContent + ' USD';
+                
+                asignarPlanDespuesDePago();
+                
+                pasosPago = 3;
+                actualizarPasos();
+                
+            }, 1000);
+        }
+    }, 300);
+}
+
+function asignarPlanDespuesDePago() {
+    try {
+        if (!planSeleccionado) return;
+        
+        let usuarioAActualizar = usuarioActual || usuarioRecienRegistrado;
+        
+        if (!usuarioAActualizar) {
+            console.error('No hay usuario al que asignar el plan');
+            return;
+        }
+        
+        let userIndex = users.findIndex(x => x.u === usuarioAActualizar);
+        
+        if (userIndex === -1) {
+            console.error('Usuario no encontrado');
+            return;
+        }
+        
+        users[userIndex].plan = planSeleccionado;
+        localStorage.setItem('users', JSON.stringify(users));
+        
+        mostrarMensaje(`¡Plan ${planSeleccionado} activado exitosamente!`, 'exito', '✅');
+        
+        if (usuarioAActualizar === usuarioActual) {
+            actualizarInfoPlanEstudiante();
+        }
+        
+        planSeleccionado = null;
+        metodoPagoSeleccionado = null;
+        
+    } catch (error) {
+        console.error('Error al asignar plan después de pago:', error);
+        mostrarMensaje('Error al activar el plan', 'error', '❌');
+    }
+}
+
+function irAlDashboard() {
+    if (usuarioActual) {
+        const user = users.find(x => x.u === usuarioActual);
+        if (user) {
+            ocultarTodo();
+            if (user.r === 'estudiante') {
+                document.getElementById('estudiante').style.display = 'block';
+                actualizarInfoPlanEstudiante();
+                cargarNotificaciones();
+            } else if (user.r === 'profesor') {
+                document.getElementById('profesor').style.display = 'block';
+                cargarHorariosProfesor();
+                cargarCheckboxHorarios();
+                cargarSolicitudesProfesor();
+            }
+        }
+    } else if (usuarioRecienRegistrado) {
+        mostrarLogin();
+        mostrarMensaje('¡Registro completado! Ahora inicia sesión con tu nueva cuenta.', 'exito', '🔑');
+    } else {
+        mostrarLogin();
+    }
+}
+
+function descargarComprobante() {
+    mostrarMensaje('Generando comprobante...', 'info', '📄');
+    
+    const contenido = `
+        <html>
+        <head>
+            <title>Comprobante de Pago - Plataforma Académica</title>
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                .header { text-align: center; margin-bottom: 30px; }
+                .details { margin: 20px 0; }
+                .details p { margin: 5px 0; }
+                .footer { margin-top: 50px; font-size: 0.9em; color: #666; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>Comprobante de Pago</h1>
+                <p>Plataforma Académica de Excelencia</p>
+            </div>
+            
+            <div class="details">
+                <p><strong>Número de Transacción:</strong> ${document.getElementById('numeroTransaccion').textContent}</p>
+                <p><strong>Plan:</strong> ${document.getElementById('comprobantePlan').textContent}</p>
+                <p><strong>Monto:</strong> ${document.getElementById('comprobanteMonto').textContent}</p>
+                <p><strong>Método de Pago:</strong> ${metodoPagoSeleccionado}</p>
+                <p><strong>Usuario:</strong> ${usuarioActual || usuarioRecienRegistrado}</p>
+                <p><strong>Fecha:</strong> ${new Date().toLocaleDateString('es-ES')}</p>
+                <p><strong>Estado:</strong> Completado</p>
+            </div>
+            
+            <div class="footer">
+                <p>Este documento es un comprobante de pago electrónico.</p>
+                <p>Plataforma Académica © ${new Date().getFullYear()}</p>
+            </div>
+        </body>
+        </html>
+    `;
+    
+    const ventana = window.open('', '_blank');
+    ventana.document.write(contenido);
+    ventana.document.close();
+    
+    setTimeout(() => {
+        ventana.print();
+        mostrarMensaje('Comprobante generado exitosamente', 'exito', '✅');
+    }, 500);
+}
+
+// ========== INICIALIZACIÓN ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar datos si no existen
+    if (!localStorage.getItem('cursos')) {
+        cursos = [];
+        localStorage.setItem('cursos', JSON.stringify(cursos));
+    } else {
+        cursos = JSON.parse(localStorage.getItem('cursos')) || [];
+    }
+    
+    if (!localStorage.getItem('solicitudes')) {
+        localStorage.setItem('solicitudes', JSON.stringify([]));
+    } else {
+        solicitudes = JSON.parse(localStorage.getItem('solicitudes')) || [];
+    }
+    
+    if (!localStorage.getItem('notis')) {
+        localStorage.setItem('notis', JSON.stringify([]));
+    } else {
+        notis = JSON.parse(localStorage.getItem('notis')) || [];
+    }
+    
+    if (!localStorage.getItem('users')) {
+        localStorage.setItem('users', JSON.stringify([]));
+    } else {
+        users = JSON.parse(localStorage.getItem('users')) || [];
+    }
+    
+    if (!localStorage.getItem('indicaciones')) {
+        localStorage.setItem('indicaciones', JSON.stringify([]));
+    } else {
+        indicaciones = JSON.parse(localStorage.getItem('indicaciones')) || [];
+    }
+    
+    inicializarSlider();
+    
+    cursosMostrados = false;
+    usuarioRecienRegistrado = null;
+    cursosRechazadosEnSesion = [];
+    
+    const btnVolverLogin = document.getElementById('btnVolverLogin');
+    if (btnVolverLogin) {
+        btnVolverLogin.onclick = volverDesdePlanes;
+    }
+    
+    // Siempre mostrar la presentación al inicio
+    ocultarTodo();
+    document.getElementById('presentacion').style.display = 'flex';
+    
+    setTimeout(() => {
+        mostrarMensaje('¡Bienvenido a la Plataforma Académica!', 'info', '🎓');
+    }, 1000);
+});
+</script>
+</body>
+</html>
